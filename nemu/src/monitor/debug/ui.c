@@ -59,7 +59,7 @@ static int cmd_info(char *args){
 		isa_reg_display();
 	else if (strcmp(arg, "w"))
 		printf("This command has not been defined for now\n");
-	else printf("This command has not been defined for now\n");
+	else printf("arg is %s, this command has not been defined for now\n", arg);
 	return 0;
 }
 
