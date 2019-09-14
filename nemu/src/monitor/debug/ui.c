@@ -63,6 +63,14 @@ static int cmd_info(char *args){
 	return 0;
 }
 
+static int cmd_x(char *args){
+	char *arg1 = strtok(NULL, " ");
+	char *arg2 = strtok(NULL, " ");
+	printf("%s, %s", arg1, arg2);
+	return 0;
+}
+
+
 
 static struct {
   char *name;
@@ -74,6 +82,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute once or more steps", cmd_si},
   { "info", "show information about reg of watchpoints", cmd_info},
+  { "x", "show the contents at a specific memory area", cmd_x},
   /* TODO: Add more commands */
 
 };
