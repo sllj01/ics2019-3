@@ -43,7 +43,7 @@ static int cmd_si(char *args){
 	char *arg = strtok(NULL, " ");
 	if (arg == NULL){
 		exec_once();
-		printf("execute once.");}
+	}
 	else{
 		int times = atoi(arg);
 		for (int index=0; index<times; index++)
