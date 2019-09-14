@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
+vaddr_t exec_once(void);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -38,6 +39,20 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+	char *arg = strtok(NULL, " ");
+	if (arg == NULL){
+		exec_once();
+		printf("execute once.");}
+	else{
+		int times = atoi(arg);
+		for (int index=0; index<times; index++)
+			exec_once();
+	}
+	return 0;
+}
+
+
 static struct {
   char *name;
   char *description;
@@ -46,7 +61,7 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "execute once or more steps", cmd_si},
   /* TODO: Add more commands */
 
 };
