@@ -55,9 +55,9 @@ static int cmd_si(char *args){
 
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
-	if (strcmp(arg, "r"))
+	if (!strcmp(arg, "r"))
 		isa_reg_display();
-	else if (strcmp(arg, "w"))
+	else if (!strcmp(arg, "w"))
 		printf("arg is %s, This command has not been defined for now\n", arg);
 	else printf("arg is %s, this command has not been defined for now\n", arg);
 	return 0;
