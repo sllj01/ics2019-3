@@ -41,14 +41,14 @@ void reg_test() {
 }
 
 void isa_reg_display() {
-	printf("EAX is %d\n", cpu.eax);
-	printf("ECX is %d\n", cpu.ecx);
-	printf("EDX is %d\n", cpu.edx);
-	printf("EBX is %d\n", cpu.ebx);
-	printf("ESP is %d\n", cpu.esp);
-	printf("EBP is %d\n", cpu.ebp);
-	printf("ESI is %d\n", cpu.esi);
-	printf("EDI is %d\n", cpu.edi);
+	printf("EAX is %u\n", cpu.eax);
+	printf("ECX is %u\n", cpu.ecx);
+	printf("EDX is %u\n", cpu.edx);
+	printf("EBX is %u\n", cpu.ebx);
+	printf("ESP is %u\n", cpu.esp);
+	printf("EBP is %u\n", cpu.ebp);
+	printf("ESI is %u\n", cpu.esi);
+	printf("EDI is %u\n", cpu.edi);
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
