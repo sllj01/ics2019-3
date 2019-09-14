@@ -70,7 +70,7 @@ static int cmd_x(char *args){
 	paddr_t addr = (paddr_t) strtol(arg2, NULL, 16);	
 	int op_time = atoi(arg1);
 	for (int time = 0; time < op_time; time++, addr++)
-	{	uint32_t outcome = paddr_read(addr, 2);
+	{	uint32_t outcome = paddr_read(addr, 1);
 		printf("%u\n", outcome);
 	}
 	return 0;
