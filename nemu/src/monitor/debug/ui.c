@@ -9,6 +9,7 @@
 
 void cpu_exec(uint64_t);
 vaddr_t exec_once(void);
+void isa_reg_display();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -52,6 +53,16 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+static int cmd_info(char *args){
+	char *arg = strtok(NULL, " ");
+	if (strcmp(arg, "r"))
+		isa_reg_display();
+	else if (strcmp(arg, "w"))
+		printf("This command has not been defined for now\n");
+	else printf("This command has not been defined for now\n");
+	return 0;
+}
+
 
 static struct {
   char *name;
@@ -62,6 +73,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute once or more steps", cmd_si},
+  { "info", "show information about reg of watchpoints", cmd_info},
   /* TODO: Add more commands */
 
 };
