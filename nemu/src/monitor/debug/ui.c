@@ -68,9 +68,11 @@ static int cmd_x(char *args){
 	char *arg1 = strtok(NULL, " ");
 	char *arg2 = strtok(NULL, " ");
 	paddr_t addr = (paddr_t) strtol(arg2, NULL, 16);	
-	int len = atoi(arg1);
-	uint32_t outcome = paddr_read(addr, len);
-	printf("%u\n", outcome);
+	int op_time = atoi(arg1);
+	for (int time = 0; time < op_time; time++, addr++)
+	{	uint32_t outcome = paddr_read(addr, 4);
+		printf("%u\n", outcome);
+	}
 	return 0;
 }
 
