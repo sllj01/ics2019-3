@@ -25,6 +25,9 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
+  {"\\-", '-'},
+  {"\\*", '*'},
+  {"\\/", '/'},
   {"==", TK_EQ},         // equal
   {"\\(", TK_LCOM},		// left combination mark
   {"\\)", TK_RCOM},		// right combination mark
