@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM10, TK_LCOM, TK_RCOM 
+  TK_NOTYPE = 256, TK_EQ, TK_NUM10, TK_LCOM, TK_RCOM, TK_EAX, TK_ECX, TK_EDX, TK_EBX, TK_ESP, TK_EBP, TK_ESI, TK_EDI 
 
   /* TODO: Add more token types */
 
@@ -31,7 +31,15 @@ static struct rule {
   {"==", TK_EQ},         // equal
   {"\\(", TK_LCOM},		// left combination mark
   {"\\)", TK_RCOM},		// right combination mark
-  {"[1-9]+", TK_NUM10}		// number in 10 jinzhi
+  {"[1-9]+", TK_NUM10},  // number in 10 jinzhi
+  {"$eax", TK_EAX},
+  {"$ecx", TK_ECX},
+  {"$ebx", TK_EBX},
+  {"$edx", TK_EDX},
+  {"$esp", TK_ESP},
+  {"$ebp", TK_EBP},
+  {"$esi", TK_ESI},
+  {"$edi", TK_EDI},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -93,8 +101,8 @@ static bool make_token(char *e) {
         }
 
         break;
-      }
-    }
+	  }
+	}
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
@@ -141,8 +149,19 @@ int find_primary_operator(int start, int end){
 
 uint32_t eval(int start, int end){
 	assert(start<=end);
-	if (start==end)
-	 	return (uint32_t) atoi(tokens[start].str);
+	if (start==end){
+		switch (tokens[start].type){
+			case TK_NUM10: return (uint32_t) atoi(tokens[start].str);
+			case TK_EAX: return cpu.eax;
+			case TK_EBX: return cpu.ebx;
+			case TK_ECX: return cpu.ecx;
+			case TK_EDX: return cpu.edx;
+			case TK_ESP: return cpu.esp;
+			case TK_EBP: return cpu.ebp;
+			case TK_ESI: return cpu.esi;
+			case TK_EDI: return cpu.edi;
+			default: assert(0);
+			}}
 	else if (check_parentheses(start, end)==true)
 		return eval(start+1, end-1);
 	else
