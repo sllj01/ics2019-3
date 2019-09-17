@@ -81,10 +81,10 @@ static int cmd_p(char *args){
 	char *arg;
 	char *pp=strtok_r(args, " ", &arg);
 	arg = strcat(pp, arg);
-	printf("%s\n%s",pp, arg);
+	//printf("%s\n%s",pp, arg);
 	bool success=true;
 	uint32_t num = expr(arg, &success);
-	printf("%u", num);
+	printf("%u\n", num);
 	return 0;
 }
 
