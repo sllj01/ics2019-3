@@ -79,8 +79,8 @@ static int cmd_x(char *args){
 
 static int cmd_p(char *args){
 	char *arg;
-	strtok_r(args, " ", &arg);
-	printf("%s", arg);
+	char *pp=strtok_r(args, " ", &arg);
+	printf("%s\n%s",pp, arg);
 	bool success=true;
 	uint32_t num = expr(arg, &success);
 	printf("%u", num);
