@@ -77,7 +77,13 @@ static int cmd_x(char *args){
 	return 0;
 }
 
-
+static int cmd_p(char *args){
+	char *arg = strtok(NULL, " ");
+	bool success=true;
+	uint32_t num = expr(arg, &success);
+	printf("%u", num);
+	return 0;
+}
 
 static struct {
   char *name;
@@ -90,6 +96,7 @@ static struct {
   { "si", "execute once or more steps", cmd_si},
   { "info", "show information about reg of watchpoints", cmd_info},
   { "x", "show the contents at a specific memory area", cmd_x},
+  { "p", "calculate the value of a given expression", cmd_p},
   /* TODO: Add more commands */
 
 };

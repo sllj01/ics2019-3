@@ -1,5 +1,6 @@
 #include "nemu.h"
-
+#include <string.h>
+#include <stdlib.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -101,6 +102,62 @@ static bool make_token(char *e) {
   return true;
 }
 
+
+bool check_parentheses(int start,int end){
+	if (tokens[start].type!=TK_LCOM || tokens[end].type!= TK_RCOM)
+		return false;
+	else
+	{
+		int count = 0;
+		for (int p=start; p<=end; p++)
+		{
+			if (tokens[p].type==TK_LCOM) count++;
+			else if (tokens[p].type==TK_RCOM) count--;
+		}
+		if (count==0) return true;
+		else assert(0);
+	}
+}
+
+int find_primary_operator(int start, int end){
+	int flag=0;
+	int out=start;
+	for (int p=start; p<=end; p++)
+	{	
+		if (tokens[p].type==TK_LCOM) flag++;
+		else if (tokens[p].type==TK_RCOM) flag--;
+		else if (tokens[p].type=='+' || tokens[p].type=='-')
+		{	if (flag==0) out = p;}
+		else if (tokens[p].type=='*' || tokens[p].type=='/')
+		{	if (flag==0&&tokens[out].type!='+'&&tokens[out].type!='-')
+				out = p;
+		}
+	}
+	return out;
+}
+
+uint32_t eval(int start, int end){
+	assert(start<=end);
+	if (start==end)
+	 	return (uint32_t) atoi(tokens[start].str);
+	else if (check_parentheses(start, end)==true)
+		return eval(start+1, end-1);
+	else
+	{	int op = find_primary_operator(start, end);
+		uint32_t val1 = eval(start, op-1);
+		uint32_t val2 = eval(op+1, end);
+		switch(tokens[op].type)
+		{
+			case '+': return val1+val2; break;
+			case '-': return val1-val2; break;
+			case '*': return val1*val2; break;
+			case '/': return val1/val2; break;
+			default: assert(0);
+		}
+	}
+}
+
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -108,7 +165,5 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
-  return 0;
+  return eval(0, nr_token-1);
 }
