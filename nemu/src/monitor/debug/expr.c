@@ -25,8 +25,8 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},         // equal
-  {"(", TK_LCOM},		// left combination mark
-  {")", TK_RCOM},		// right combination mark
+  {"\\(", TK_LCOM},		// left combination mark
+  {"\\)", TK_RCOM},		// right combination mark
   {"[1-9]+", TK_NUM10}		// number in 10 jinzhi
 };
 
