@@ -27,7 +27,7 @@ static struct rule {
   {"==", TK_EQ},         // equal
   {"(", TK_LCOM},		// left combination mark
   {")", TK_RCOM},		// right combination mark
-  {"\\d+", TK_NUM10}		// number in 10 jinzhi
+  {"[1-9]+", TK_NUM10}		// number in 10 jinzhi
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
