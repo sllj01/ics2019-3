@@ -32,7 +32,7 @@ static struct rule {
   {"\\(", TK_LCOM},		// left combination mark
   {"\\)", TK_RCOM},		// right combination mark
   {"[1-9]+", TK_NUM10},  // number in 10 jinzhi
-  {"$eax", TK_EAX},
+  {"\\$eax", TK_EAX},
   {"$ecx", TK_ECX},
   {"$ebx", TK_EBX},
   {"$edx", TK_EDX},
