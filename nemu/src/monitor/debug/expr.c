@@ -33,13 +33,13 @@ static struct rule {
   {"\\)", TK_RCOM},		// right combination mark
   {"[1-9]+", TK_NUM10},  // number in 10 jinzhi
   {"\\$eax", TK_EAX},
-  {"$ecx", TK_ECX},
-  {"$ebx", TK_EBX},
-  {"$edx", TK_EDX},
-  {"$esp", TK_ESP},
-  {"$ebp", TK_EBP},
-  {"$esi", TK_ESI},
-  {"$edi", TK_EDI},
+  {"\\$ecx", TK_ECX},
+  {"\\$ebx", TK_EBX},
+  {"\\$edx", TK_EDX},
+  {"\\$esp", TK_ESP},
+  {"\\$ebp", TK_EBP},
+  {"\\$esi", TK_ESI},
+  {"\\$edi", TK_EDI},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
