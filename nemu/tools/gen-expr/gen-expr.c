@@ -7,8 +7,34 @@
 
 // this should be enough
 static char buf[65536];
+static int index = 0;
+//static inline void gen_rand_expr() {
+//  buf[0] = '\0';
+//}
+//
+
+uint32_t gen_num(uint32_t top){
+	return (uint32_t)rand()%top;
+}
+
+void gen_op() {
+	switch (gen_num(4)){
+		case 0: strcat(buf, "+"); break;
+		case 1: strcat(buf, "-"); break;
+		case 2: strcat(buf, "*"); break;
+		case 3: strcat(buf, "/"); break;
+		default: assert(0);
+		}
+}
+
 static inline void gen_rand_expr() {
-  buf[0] = '\0';
+	buf[0] = '\0';
+	switch (gen_num(3)) {
+		case 0: char *temp; sprintf(temp, "%s", gen_num(0xFFFFFFFF)); strcat(buf, temp); break;
+		case 1: strcat(buf, "("); gen_rand_expr(); strcat(buf, ")"); break;
+		default: gen_rand_expr(); gen_op(); gen_rand_expr(); break;
+	}
+	return;
 }
 
 static char code_buf[65536];
