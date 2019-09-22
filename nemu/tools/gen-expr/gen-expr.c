@@ -23,7 +23,6 @@ uint32_t gen_num(uint32_t top){
 void gen_opnum(int top){
 //  uint32_t product = (uint32_t)rand()%top;
      int product = rand()%top;
-     printf("random number is %u\n", product);
 
 	 char temp[100];
 	 sprintf(temp, "%d", product);
@@ -88,8 +87,8 @@ int main(int argc, char *argv[]) {
 
     int result;
     int _;
-	_ = fscanf(fp, "%d", &result);
-	printf("the process of writing result into a file is %d", _);
+	_= fscanf(fp, "%d", &result);
+//	printf("the process of writing result into a file is %d", _);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
