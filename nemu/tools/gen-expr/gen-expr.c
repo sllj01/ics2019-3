@@ -4,18 +4,32 @@
 #include <time.h>
 #include <assert.h>
 #include <string.h>
-
+#define true 1
+#define false 0
 // this should be enough
 static char buf[65536];
-static int index = 0;
 //static inline void gen_rand_expr() {
 //  buf[0] = '\0';
 //}
 //
 
 uint32_t gen_num(uint32_t top){
-	return (uint32_t)rand()%top;
+//	uint32_t product = (uint32_t)rand()%top;
+	int product = rand()%top;
+	return product;
 }
+
+
+void gen_opnum(int top){
+//  uint32_t product = (uint32_t)rand()%top;
+     int product = rand()%top;
+     printf("random number is %u\n", product);
+
+	 char temp[100];
+	 sprintf(temp, "%d", product);
+	 strcat(buf, temp);
+}
+
 
 void gen_op() {
 	switch (gen_num(4)){
@@ -27,13 +41,14 @@ void gen_op() {
 		}
 }
 
-static inline void gen_rand_expr() {
-	buf[0] = '\0';
-	switch (gen_num(3)) {
-		case 0: char *temp; sprintf(temp, "%s", gen_num(0xFFFFFFFF)); strcat(buf, temp); break;
-		case 1: strcat(buf, "("); gen_rand_expr(); strcat(buf, ")"); break;
-		default: gen_rand_expr(); gen_op(); gen_rand_expr(); break;
-	}
+static inline void gen_rand_expr(int flag) {
+	if (flag)
+		buf[0] = '\0';
+	switch (gen_num(3)){
+		case 0: gen_opnum(9999); break;
+		case 1: strcat(buf, "("); gen_rand_expr(0); strcat(buf, ")"); break;
+		default: gen_rand_expr(0); gen_op(); gen_rand_expr(0); break;
+		}
 	return;
 }
 
@@ -55,7 +70,8 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
-    gen_rand_expr();
+	buf[0] = '\0';
+    gen_rand_expr(true);
 
     sprintf(code_buf, code_format, buf);
 
@@ -71,7 +87,9 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
 
     int result;
-    fscanf(fp, "%d", &result);
+    int _;
+	_ = fscanf(fp, "%d", &result);
+	printf("the process of writing result into a file is %d", _);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
