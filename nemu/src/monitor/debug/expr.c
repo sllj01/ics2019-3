@@ -171,6 +171,7 @@ uint32_t eval(int start, int end){
 		{
 			uint32_t val1 = eval(start, op-1);
 			uint32_t val2 = eval(op+1, end);
+			printf("%u\n%u\n", val1, val2);
 			switch(tokens[op].type)
 			{
 				case '+': return val1+val2; break;
