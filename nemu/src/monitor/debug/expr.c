@@ -6,9 +6,11 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+uint32_t isa_reg_str2val(const char*, bool*);
+uint32_t paddr_read(paddr_t, int);
+extern bool success;
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM10, TK_LCOM, TK_RCOM, TK_EAX, TK_ECX, TK_EDX, TK_EBX, TK_ESP, TK_EBP, TK_ESI, TK_EDI 
+  TK_NOTYPE = 256, TK_EQ, TK_NUM10, TK_LCOM, TK_RCOM, TK_HEXADECIMAL, TK_REGNAME, TK_NOTEQUAL, TK_AND, TK_DEREF
 
   /* TODO: Add more token types */
 
@@ -32,14 +34,10 @@ static struct rule {
   {"\\(", TK_LCOM},		// left combination mark
   {"\\)", TK_RCOM},		// right combination mark
   {"[1-9]+", TK_NUM10},  // number in 10 jinzhi
-  {"\\$eax", TK_EAX},
-  {"\\$ecx", TK_ECX},
-  {"\\$ebx", TK_EBX},
-  {"\\$edx", TK_EDX},
-  {"\\$esp", TK_ESP},
-  {"\\$ebp", TK_EBP},
-  {"\\$esi", TK_ESI},
-  {"\\$edi", TK_EDI},
+  {"0x[\\dABCDEF]+", TK_HEXADECIMAL},
+  {"$[a-zA-Z]{2,3}", TK_REGNAME},
+  {"!=", TK_NOTEQUAL},
+  {"&&", TK_AND},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -96,7 +94,7 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
 		  case TK_NOTYPE: break;
-		  case TK_NUM10: strncpy(tokens[nr_token].str, substr_start, substr_len);
+		  case TK_NUM10:case TK_HEXADECIMAL: case TK_REGNAME: strncpy(tokens[nr_token].str, substr_start, substr_len);
           default: tokens[nr_token].type = rules[i].token_type; nr_token++; 
         }
 
@@ -143,6 +141,10 @@ int find_primary_operator(int start, int end){
 		{	if (flag==0&&tokens[out].type!='+'&&tokens[out].type!='-')
 				out = p;
 		}
+		else if (tokens[p].type==TK_DEREF)
+		{	if (flag==0&&tokens[out].type!='+'&&tokens[out].type!='-'&&tokens[out].type!='*'&&tokens[out].type!='/')
+				out=p;
+		}
 	}
 	return out;
 }
@@ -151,30 +153,35 @@ uint32_t eval(int start, int end){
 	assert(start<=end);
 	if (start==end){
 		switch (tokens[start].type){
-			case TK_NUM10: return (uint32_t) atoi(tokens[start].str);
-			case TK_EAX: return cpu.eax;
-			case TK_EBX: return cpu.ebx;
-			case TK_ECX: return cpu.ecx;
-			case TK_EDX: return cpu.edx;
-			case TK_ESP: return cpu.esp;
-			case TK_EBP: return cpu.ebp;
-			case TK_ESI: return cpu.esi;
-			case TK_EDI: return cpu.edi;
+			case TK_NUM10: return (uint32_t) atoi(tokens[start].str);break;
+			case TK_HEXADECIMAL: return (uint32_t) strtol(tokens[start].str, NULL, 16);break;
+			case TK_REGNAME: return isa_reg_str2val(tokens[start].str, &success);break;
 			default: assert(0);
 			}}
 	else if (check_parentheses(start, end)==true)
 		return eval(start+1, end-1);
 	else
 	{	int op = find_primary_operator(start, end);
-		uint32_t val1 = eval(start, op-1);
-		uint32_t val2 = eval(op+1, end);
-		switch(tokens[op].type)
+		if (tokens[op].type==TK_DEREF)
 		{
-			case '+': return val1+val2; break;
-			case '-': return val1-val2; break;
-			case '*': return val1*val2; break;
-			case '/': return val1/val2; break;
-			default: assert(0);
+			paddr_t addr = eval(op+1, end);
+			return paddr_read(addr, 4);
+		}
+		else
+		{
+			uint32_t val1 = eval(start, op-1);
+			uint32_t val2 = eval(op+1, end);
+			switch(tokens[op].type)
+			{
+				case '+': return val1+val2; break;
+				case '-': return val1-val2; break;
+				case '*': return val1*val2; break;
+				case '/': return val1/val2; break;
+				case TK_EQ: return val1==val2?1:0; break;
+				case TK_NOTEQUAL: return val1==val2?0:1; break;
+				case TK_AND: return val1&&val2; break;
+				default: assert(0);
+			}
 		}
 	}
 }
@@ -185,7 +192,10 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+  for (int i=0; i<nr_token; i++){
+	  if (tokens[i].type=='*' && (i==0||tokens[i-1].type==TK_LCOM||tokens[i-1].type==TK_EQ||tokens[i-1].type==TK_NOTEQUAL||tokens[i-1].type=='+'||tokens[i-1].type=='-'||tokens[i-1].type=='/'||tokens[i-1].type=='*'))
+      tokens[i].type=TK_DEREF;
+  }
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0, nr_token-1);
 }

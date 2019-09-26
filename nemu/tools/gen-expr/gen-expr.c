@@ -15,6 +15,8 @@ static char buf[65536];
 
 uint32_t gen_num(uint32_t top){
 //	uint32_t product = (uint32_t)rand()%top;
+//	int seed=time(0);
+//	srand(seed);
 	int product = rand()%top;
 	return product;
 }
@@ -22,10 +24,11 @@ uint32_t gen_num(uint32_t top){
 
 void gen_opnum(int top){
 //  uint32_t product = (uint32_t)rand()%top;
-     int product = rand()%top;
-
+//	int seed = time(0);
+//	srand(seed);
+     uint32_t product = rand()%top;
 	 char temp[100];
-	 sprintf(temp, "%d", product);
+	 sprintf(temp, "%u", product);
 	 strcat(buf, temp);
 }
 
@@ -71,7 +74,7 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < loop; i ++) {
 	buf[0] = '\0';
     gen_rand_expr(true);
-
+    printf("%s\n",buf);
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
@@ -86,8 +89,7 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
 
     int result;
-    int _;
-	_= fscanf(fp, "%d", &result);
+	 fscanf(fp, "%d", &result);
 //	printf("the process of writing result into a file is %d", _);
     pclose(fp);
 

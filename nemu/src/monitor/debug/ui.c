@@ -11,6 +11,7 @@ void cpu_exec(uint64_t);
 vaddr_t exec_once(void);
 void isa_reg_display();
 uint32_t paddr_read(paddr_t, int);
+bool success=true;
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -82,7 +83,7 @@ static int cmd_p(char *args){
 	char *pp=strtok_r(args, " ", &arg);
 	arg = strcat(pp, arg);
 	//printf("%s\n%s",pp, arg);
-	bool success=true;
+	success=true;
 	uint32_t num = expr(arg, &success);
 	printf("%u\n", num);
 	return 0;

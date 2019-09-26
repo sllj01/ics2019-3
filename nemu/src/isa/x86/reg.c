@@ -2,10 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <inttypes.h>
+#include <string.h>
 const char *regsl[] = {"eax", "ecx", "edx", "ebx", "esp", "ebp", "esi", "edi"};
 const char *regsw[] = {"ax", "cx", "dx", "bx", "sp", "bp", "si", "di"};
 const char *regsb[] = {"al", "cl", "dl", "bl", "ah", "ch", "dh", "bh"};
-
+/*char* strlwr(const char* ps)
+{	char product
+	while (*ps){
+		if('A'<=*ps && *ps<='Z')
+			*ps+='a'-'A';
+		ps++;
+	}
+}*/
 void reg_test() {
   srand(time(0));
   uint32_t sample[8];
@@ -52,5 +60,30 @@ void isa_reg_display() {
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+//	strlwr(s);
+	if (!strcmp(s, "$eax")) return (uint32_t) cpu.gpr[0]._32;
+	else if (!strcmp(s, "$ecx")) return (uint32_t) cpu.gpr[1]._32;
+	else if (!strcmp(s, "$edx")) return (uint32_t) cpu.gpr[2]._32;
+	else if (!strcmp(s, "$ebx")) return (uint32_t) cpu.gpr[3]._32; 
+	else if (!strcmp(s, "$esp")) return (uint32_t) cpu.gpr[4]._32;
+	else if (!strcmp(s, "$ebp")) return (uint32_t) cpu.gpr[5]._32;
+	else if (!strcmp(s, "$esi")) return (uint32_t) cpu.gpr[6]._32;
+	else if (!strcmp(s, "$edi")) return (uint32_t) cpu.gpr[7]._32; 
+	else if (!strcmp(s, "$ax")) return (uint32_t) cpu.gpr[0]._16; 
+	else if (!strcmp(s, "$cx")) return (uint32_t) cpu.gpr[1]._16; 
+	else if (!strcmp(s, "$dx")) return (uint32_t) cpu.gpr[2]._16; 
+	else if (!strcmp(s, "$bx")) return (uint32_t) cpu.gpr[3]._16; 
+	else if (!strcmp(s, "$sp")) return (uint32_t) cpu.gpr[4]._16; 
+	else if (!strcmp(s, "$bp")) return (uint32_t) cpu.gpr[5]._16; 
+	else if (!strcmp(s, "$si")) return (uint32_t) cpu.gpr[6]._16; 
+	else if (!strcmp(s, "$di")) return (uint32_t) cpu.gpr[7]._16; 
+	else if (!strcmp(s, "$al")) return (uint32_t) cpu.gpr[0]._8[0]; 
+	else if (!strcmp(s, "$cl")) return (uint32_t) cpu.gpr[1]._8[0]; 
+	else if (!strcmp(s, "$dl")) return (uint32_t) cpu.gpr[2]._8[0]; 
+	else if (!strcmp(s, "$bl")) return (uint32_t) cpu.gpr[3]._8[0]; 
+	else if (!strcmp(s, "$ah")) return (uint32_t) cpu.gpr[0]._8[1]; 
+	else if (!strcmp(s, "$ch")) return (uint32_t) cpu.gpr[1]._8[1]; 
+	else if (!strcmp(s, "$dh")) return (uint32_t) cpu.gpr[2]._8[1]; 
+	else if (!strcmp(s, "$bh")) return (uint32_t) cpu.gpr[3]._8[1];
+	else assert(0);
 }
