@@ -33,7 +33,7 @@ static struct rule {
   {"==", TK_EQ},         // equal
   {"\\(", TK_LCOM},		// left combination mark
   {"\\)", TK_RCOM},		// right combination mark
-  {"0x[\\dABCDEF]+", TK_HEXADECIMAL},
+  {"0x[0-9ABCDEF]+", TK_HEXADECIMAL},
   {"[1-9]+", TK_NUM10},  // number in 10 jinzhi
   {"\\$[a-zA-Z]{2,3}", TK_REGNAME},
   {"!=", TK_NOTEQUAL},
