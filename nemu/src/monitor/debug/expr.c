@@ -150,6 +150,7 @@ int find_primary_operator(int start, int end){
 }
 
 uint32_t eval(int start, int end){
+	printf("click!\n");
 	assert(start<=end);
 	if (start==end){
 		switch (tokens[start].type){
