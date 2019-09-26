@@ -130,22 +130,17 @@ bool check_parentheses(int start,int end){
 
 int find_primary_operator(int start, int end){
 	int flag=0;
+	int priority=-1;
 	int out=start;
 	for (int p=start; p<=end; p++)
 	{	
-		if (tokens[p].type==TK_EQ||tokens[p].type==TK_NOTEQUAL) return p;
 		if (tokens[p].type==TK_LCOM) flag++;
 		else if (tokens[p].type==TK_RCOM) flag--;
-		else if (tokens[p].type=='+' || tokens[p].type=='-')
-		{	if (flag==0) out = p;}
-		else if (tokens[p].type=='*' || tokens[p].type=='/')
-		{	if (flag==0&&tokens[out].type!='+'&&tokens[out].type!='-')
-				out = p;
-		}
-		else if (tokens[p].type==TK_DEREF)
-		{	if (flag==0&&tokens[out].type!='+'&&tokens[out].type!='-'&&tokens[out].type!='*'&&tokens[out].type!='/')
-				out=p;
-		}
+		else if (tokens[p].type==TK_AND&&flag==0) {out = p; priority=4;}
+		else if ((tokens[p].type==TK_EQ||tokens[p].type==TK_NOTEQUAL)&&priority<4&&flag==0) {out = p;priority=3;}
+		else if ((tokens[p].type=='+' || tokens[p].type=='-')&&priority<3&&flag==0) {out = p;priority=2;}
+		else if ((tokens[p].type=='*' || tokens[p].type=='/')&&priority<2&&flag==0) {out = p;priority=1;}
+		else if (tokens[p].type==TK_DEREF&&priority<1&&flag==0) {out = p;priority=0;}
 	}
 	return out;
 }
