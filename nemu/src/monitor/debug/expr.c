@@ -133,6 +133,7 @@ int find_primary_operator(int start, int end){
 	int out=start;
 	for (int p=start; p<=end; p++)
 	{	
+		if (tokens[p].type==TK_EQ||tokens[p].type==TK_NOTEQUAL) return p;
 		if (tokens[p].type==TK_LCOM) flag++;
 		else if (tokens[p].type==TK_RCOM) flag--;
 		else if (tokens[p].type=='+' || tokens[p].type=='-')
