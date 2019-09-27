@@ -151,7 +151,7 @@ uint32_t eval(int start, int end){
 	if (start==end){
 		switch (tokens[start].type){
 			case TK_NUM10: return (uint32_t) atoi(tokens[start].str);break;
-			case TK_HEXADECIMAL: return (uint32_t) strtol(tokens[start].str, NULL, 16);break;
+			case TK_HEXADECIMAL: printf("the str is %s\n", tokens[start].str); return strtol(tokens[start].str, NULL, 16);break;
 			case TK_REGNAME: return isa_reg_str2val(tokens[start].str, &success);break;
 			default: assert(0);
 			}}
