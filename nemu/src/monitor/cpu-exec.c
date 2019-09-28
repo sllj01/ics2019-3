@@ -12,7 +12,7 @@
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
 
-NEMUState nemu_state = {.state = NEMU_RUNNING};
+NEMUState nemu_state = {.state = NEMU_STOP};
 
 void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret) {
   nemu_state = (NEMUState) { .state = state, .halt_pc = halt_pc, .halt_ret = halt_ret };
@@ -33,8 +33,6 @@ void cpu_exec(uint64_t n) {
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
-      return;
-    case NEMU_STOP: printf("Program execution has suspended."); return;
     default: nemu_state.state = NEMU_RUNNING;
   }
 
