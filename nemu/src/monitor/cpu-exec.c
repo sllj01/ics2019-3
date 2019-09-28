@@ -77,6 +77,7 @@ void cpu_exec(uint64_t n) {
 	  temp->value = a;
 	  temp = temp->next;
   }
+  printf("///////////////////////%d", changed);
   if (changed) nemu_state.state = NEMU_STOP;
   else nemu_state.state= NEMU_RUNNING;
 #endif
