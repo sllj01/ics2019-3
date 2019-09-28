@@ -109,6 +109,7 @@ static int cmd_w(char *args) {
 
 static int cmd_d(char *args) {
 	int index = atoi(strtok(NULL, " "));
+	printf("the number is %d\n", index);
 	WP* temp=head;
 	WP* product=NULL;
 	while (temp!=NULL) {
