@@ -73,10 +73,10 @@ void cpu_exec(uint64_t n) {
 			  printf("watchpoint  what      Old_value  New_value\n");
 		  }
 		  printf("%02d          %s        %u      %u", temp->NO, temp->expression, temp->value, a);
+		  changed=true;
 	  }
 	  temp->value = a;
 	  temp = temp->next;
-	  changed=true;
   }
   printf("///////////////////////%d", changed);
   if (changed) nemu_state.state = NEMU_STOP;
