@@ -60,8 +60,8 @@ void free_wp(WP *wp) {
 		while (head->next!=wp) temp1 = temp1->next;
 		WP* temp2 = free_;
 		free_ = temp1->next;
-		free_->next = temp2;
 		temp1->next = temp1->next->next;
+		free_->next = temp2;
 	}
 }
 
