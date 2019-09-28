@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include "../src/monitor/debug/watchpoint.c"
 void cpu_exec(uint64_t);
 vaddr_t exec_once(void);
 void isa_reg_display();
