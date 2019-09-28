@@ -57,7 +57,7 @@ void free_wp(WP *wp) {
 	}
 	else {
 		WP* temp1 = head;
-		while (temp1->next!=wp) {temp1 = temp1->next;printf("%d\n",temp1->NO);}
+		while (temp1->next!=wp) {temp1 = temp1->next;}
 		WP* temp2 = free_;
 		free_ = temp1->next;
 		temp1->next = temp1->next->next;
