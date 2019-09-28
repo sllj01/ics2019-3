@@ -63,7 +63,7 @@ static int cmd_info(char *args){
 	if (!strcmp(arg, "r"))
 		isa_reg_display();
 	else if (!strcmp(arg, "w")){
-		printf("Num    Type          Value        What    ");
+		printf("Num    Type          Value        What    \n");
 		WP* temp = head;
 		while (temp!=NULL) {
 			printf("%02d     hw watchpoint %u      %s\n", temp->NO, temp->value, temp->expression);
@@ -107,6 +107,24 @@ static int cmd_w(char *args) {
 	return 0;
 }
 
+static int cmd_d(char *args) {
+	int index = atoi(strtok(NULL, " "));
+	WP* temp=head;
+	WP* product=NULL;
+	while (temp!=NULL) {
+		if (temp->NO==index) { product = temp; break;}
+		temp = temp->next;
+	}
+	if (product==NULL) printf("this whatchpoint doesnt exist!\n");
+	else
+	{
+		free_wp(product);
+		printf("delete watchpoint %d", product->NO);
+	}
+	return 0;
+}
+
+
 static struct {
   char *name;
   char *description;
@@ -120,6 +138,7 @@ static struct {
   { "x", "show the contents at a specific memory area", cmd_x},
   { "p", "calculate the value of a given expression", cmd_p},
   { "w", "set a watchpoint", cmd_w},
+  { "d", "delete a watpoint", cmd_d},
   /* TODO: Add more commands */
 
 };
