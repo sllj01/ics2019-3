@@ -36,8 +36,10 @@ vaddr_t exec_once(void) {
 		printf("%02d          %s        %u      %u", temp->NO, temp->expression, temp->value, a);
 	  }
 	  temp->value = a;
+	  temp = temp->next;
   }
 
   if (changed) nemu_state.state = NEMU_STOP;
+  else nemu_state.state = NEMU_RUNNING;
   return decinfo.seq_pc;
 }
