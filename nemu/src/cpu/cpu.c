@@ -1,9 +1,6 @@
 #include "cpu/exec.h"
 #include "monitor/watchpoint.h"
 #include "monitor/monitor.h"
-extern WP* head;
-extern WP* free_;
-extern uint32_t expr(char*, bool*);
 
 CPU_state cpu;
 

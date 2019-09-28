@@ -85,5 +85,6 @@ uint32_t isa_reg_str2val(const char *s, bool *success) {
 	else if (!strcmp(s, "$ch")) return (uint32_t) cpu.gpr[1]._8[1]; 
 	else if (!strcmp(s, "$dh")) return (uint32_t) cpu.gpr[2]._8[1]; 
 	else if (!strcmp(s, "$bh")) return (uint32_t) cpu.gpr[3]._8[1];
+	else if (!strcmp(s, "$pc")) return (uint32_t) cpu.pc;
 	else assert(0);
 }
