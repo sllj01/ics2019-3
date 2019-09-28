@@ -71,7 +71,7 @@ void cpu_exec(uint64_t n) {
 			  printf("watchpoint value changed\n");
 			  printf("watchpoint  what      Old_value  New_value\n");
 		  }
-		  printf("%02d          %s        %u      %u", temp->NO, temp->expression, temp->value, a);
+		  printf("%02d          %s        %u      %u\n", temp->NO, temp->expression, temp->value, a);
 		  changed=true;
 	  }
 	  temp->value = a;
