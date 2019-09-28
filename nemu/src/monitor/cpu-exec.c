@@ -12,7 +12,7 @@
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
 
-NEMUState nemu_state = {.state = NEMU_STOP};
+NEMUState nemu_state = {.state = NEMU_RUNNING};
 
 void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret) {
   nemu_state = (NEMUState) { .state = state, .halt_pc = halt_pc, .halt_ret = halt_ret };
