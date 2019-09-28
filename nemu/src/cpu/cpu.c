@@ -1,4 +1,9 @@
 #include "cpu/exec.h"
+#include "monitor/watchpoint.h"
+#include "monitor/monitor.h"
+extern WP* head;
+extern WP* free_;
+extern uint32_t expr(char*, bool*);
 
 CPU_state cpu;
 
@@ -17,6 +22,22 @@ vaddr_t exec_once(void) {
   decinfo.seq_pc = cpu.pc;
   isa_exec(&decinfo.seq_pc);
   update_pc();
+  WP *temp=head;
+  bool success=true;
+  bool changed=false;
+  while (temp!=NULL) {
+	  success=true;
+	  uint32_t a = expr(temp->expression, &success);
+	  if (a!=temp->value) {
+		if (!changed) {
+			printf("watchpoint value changed\n");
+			printf("watchpoint  what      Old_value  New_value\n");
+		}
+		printf("%02d          %s        %u      %u", temp->NO, temp->expression, temp->value, a);
+	  }
+	  temp->value = a;
+  }
 
+  if (changed) nemu_state.state = NEMU_STOP;
   return decinfo.seq_pc;
 }
