@@ -12,6 +12,10 @@ vaddr_t exec_once(void);
 void isa_reg_display();
 uint32_t paddr_read(paddr_t, int);
 bool success=true;
+extern WP *head;
+extern WP *free_;
+WP* new_wp();
+void free_wp(WP*);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -59,8 +63,13 @@ static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	if (!strcmp(arg, "r"))
 		isa_reg_display();
-	else if (!strcmp(arg, "w"))
-		printf("arg is %s, This command has not been defined for now\n", arg);
+	else if (!strcmp(arg, "w")){
+		printf("Num    Type          Value        What    ");
+		WP* temp = head;
+		while (temp!=NULL) {
+			printf("%02d     hw watchpoint %u      %s\n", temp->NO, temp->value, temp->expression);
+		}
+	}
 	else printf("arg is %s, this command has not been defined for now\n", arg);
 	return 0;
 }
@@ -89,6 +98,15 @@ static int cmd_p(char *args){
 	return 0;
 }
 
+static int cmd_w(char *args) {
+	char *arg = strtok(NULL, " ");
+	WP* temp = new_wp();
+	success=true;
+	strcpy(temp->expression, arg);
+	temp->value = (uint32_t) expr(arg, &success);
+	return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -101,6 +119,7 @@ static struct {
   { "info", "show information about reg of watchpoints", cmd_info},
   { "x", "show the contents at a specific memory area", cmd_x},
   { "p", "calculate the value of a given expression", cmd_p},
+  { "w", "set a watchpoint", cmd_w},
   /* TODO: Add more commands */
 
 };
