@@ -28,6 +28,7 @@ vaddr_t exec_once(void) {
   while (temp!=NULL) {
 	  success=true;
 	  uint32_t a = expr(temp->expression, &success);
+	  printf("a=%u\n", a);
 	  if (a!=temp->value) {
 		if (!changed) {
 			printf("watchpoint value changed\n");
