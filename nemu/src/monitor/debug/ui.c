@@ -48,12 +48,11 @@ static int cmd_help(char *args);
 static int cmd_si(char *args){
 	char *arg = strtok(NULL, " ");
 	if (arg == NULL){
-		exec_once();
+		cpu_exec(1);
 	}
 	else{
 		int times = atoi(arg);
-		for (int index=0; index<times; index++)
-			exec_once();
+		cpu_exec(times);
 	}
 	return 0;
 }
