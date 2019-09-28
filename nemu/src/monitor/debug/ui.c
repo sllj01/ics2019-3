@@ -105,6 +105,7 @@ static int cmd_w(char *args) {
 	success=true;
 	strcpy(temp->expression, arg);
 	temp->value = aa;
+	printf("set watchpoint on %s\n", temp->expression);
 	return 0;
 }
 
@@ -116,12 +117,11 @@ static int cmd_d(char *args) {
 		if (temp->NO==index) { product = temp; break;}
 		temp = temp->next;
 	}
-	printf("found!\n");
 	if (product==NULL) printf("this whatchpoint doesnt exist!\n");
 	else
 	{
 		free_wp(product);
-		printf("delete watchpoint %d", product->NO);
+		printf("delete watchpoint %d\n", product->NO);
 	}
 	return 0;
 }
