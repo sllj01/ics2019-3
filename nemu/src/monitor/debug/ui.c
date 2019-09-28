@@ -100,10 +100,11 @@ static int cmd_p(char *args){
 
 static int cmd_w(char *args) {
 	char *arg = strtok(NULL, " ");
+	uint32_t aa = (uint32_t) expr(arg, &success);
 	WP* temp = new_wp();
 	success=true;
 	strcpy(temp->expression, arg);
-	temp->value = (uint32_t) expr(arg, &success);
+	temp->value = aa;
 	return 0;
 }
 
