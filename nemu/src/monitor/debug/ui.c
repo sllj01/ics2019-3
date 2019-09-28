@@ -67,6 +67,7 @@ static int cmd_info(char *args){
 		WP* temp = head;
 		while (temp!=NULL) {
 			printf("%02d     hw watchpoint %u      %s\n", temp->NO, temp->value, temp->expression);
+		temp = temp->next;
 		}
 	}
 	else printf("arg is %s, this command has not been defined for now\n", arg);
