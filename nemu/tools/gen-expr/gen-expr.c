@@ -73,8 +73,9 @@ int main(int argc, char *argv[]) {
   int i;
   for (i = 0; i < loop; i ++) {
 	buf[0] = '\0';
-    gen_rand_expr(true);
-    printf("%s\n",buf);
+    do {
+    	gen_rand_expr(true);
+    } while (strlen(buf)>64536);
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
@@ -82,14 +83,14 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
+    int ret = system("gcc -Wall -Werror /tmp/.code.c -o /tmp/.expr");
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
-    assert(fp != NULL);
+    if (fp==NULL) continue;
 
     int result;
-	 fscanf(fp, "%d", &result);
+    fscanf(fp, "%d", &result);
 //	printf("the process of writing result into a file is %d", _);
     pclose(fp);
 
