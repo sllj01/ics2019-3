@@ -27,7 +27,7 @@ static OpcodeEntry opcode_table [32] = {
 };
 
 void isa_exec(vaddr_t *pc) {
-  decinfo.isa.instr.val = instr_fetch(pc, 4);
+  decinfo.isa.instr.val = instr_fetch(pc, 4); //查找指令信息和entry
   assert(decinfo.isa.instr.opcode1_0 == 0x3);
-  idex(pc, &opcode_table[decinfo.isa.instr.opcode6_2]);
+  idex(pc, &opcode_table[decinfo.isa.instr.opcode6_2]); //执行指令并调用译码辅助函数获得操作数
 }

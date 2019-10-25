@@ -39,7 +39,9 @@ void operand_write(Operand *, rtlreg_t *);
 /* shared by all helper functions */
 extern DecodeInfo decinfo;
 
-#define id_src (&decinfo.src)
+
+//src/src1/dest操作数的地址。和MAR，MDR有异曲同工之处。
+#define id_src (&decinfo.src) 
 #define id_src2 (&decinfo.src2)
 #define id_dest (&decinfo.dest)
 
