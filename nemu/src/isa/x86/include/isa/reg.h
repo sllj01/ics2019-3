@@ -22,8 +22,20 @@ typedef struct {
     uint32_t _32;
     uint16_t _16;
     uint8_t _8[2];
-  } gpr[8];
-  struct{rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;};};
+  } gpr[9];
+  struct{rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+          struct Eflags{unsigned CF:1;
+                  unsigned not_concerned1:1;
+                  unsigned PF:1;
+                  unsigned not_concerned2:1;
+                  unsigned AF:1;
+                  unsigned not_concerned3:1;
+                  unsigned ZF:1;
+                  unsigned SF:1;
+                  unsigned not_concerned4:3;
+                  unsigned OF:1;
+                  unsigned not_concerned:20;} eflags;
+  };};
 /*
 	union {
 	uint32_t _32;
