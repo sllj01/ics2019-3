@@ -78,7 +78,7 @@ void cpu_exec(uint64_t n) {
 	  temp = temp->next;
   }
   if (changed) nemu_state.state = NEMU_STOP;
-  else nemu_state.state= NEMU_RUNNING;
+  // else nemu_state.state= NEMU_RUNNING;
 #endif
 
   g_nr_guest_instr ++;
