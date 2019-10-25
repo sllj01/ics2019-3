@@ -22,27 +22,27 @@ static make_EHelper(name) { \
 /* 0x80, 0x81, 0x83 */
 make_group(gp1,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)
+    EX(sub), EMPTY, EMPTY, EMPTY)//ADD,OR, ADC, SBB, AND, SUB, XOR, CMP
 
 /* 0xc0, 0xc1, 0xd0, 0xd1, 0xd2, 0xd3 */
 make_group(gp2,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)
+    EMPTY, EMPTY, EMPTY, EMPTY)//ROL, ROR, RCL, RCR, SHL, SHR, NONE, SAR
 
 /* 0xf6, 0xf7 */
 make_group(gp3,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)
+    EMPTY, EMPTY, EMPTY, EMPTY)//TEST, NONE, NOT, NEG, MUL, IMUL, DIV, IDIV
 
 /* 0xfe */
 make_group(gp4,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)
+    EMPTY, EMPTY, EMPTY, EMPTY)//INC, DEC, 
 
 /* 0xff */
 make_group(gp5,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)
+    EMPTY, EMPTY, EMPTY, EMPTY)//INC, DEC, CALL, CALL, JMP, JMP, PUSH
 
 /* 0x0f 0x01*/
 make_group(gp7,
