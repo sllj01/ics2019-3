@@ -31,7 +31,10 @@ static inline make_DopHelper(SI) {
    *
    op->simm = ???
    */
-  TODO();
+  //TODO();
+
+  int32_t si = (int32_t) instr_fetch(pc, op->width);
+  op->simm = si;
 
   rtl_li(&op->val, op->simm);
 
@@ -77,7 +80,42 @@ static inline make_DopHelper(r) {
  * Sw
  */
 static inline void decode_op_rm(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool load_reg_val) {
-  read_ModR_M(pc, rm, load_rm_val, reg, load_reg_val);
+  read_ModR_M(pc, rm, load_rm_val, reg, load_r
+/* AL <- Ib
+ * eAX <- Iv
+ */
+make_DHelper(I2a) {
+  decode_op_a(pc, id_dest, true);
+  decode_op_I(pc, id_src, true);
+}
+
+/* Gv <- EvIb
+ * Gv <- EvIv
+ * use for imul */
+make_DHelper(I_E2G) {
+  decode_op_rm(pc, id_src2, true, id_dest, false);
+  decode_op_I(pc, id_src, true);
+}
+
+/* Eb <- Ib
+ * Ev <- Iv
+ */
+make_DHelper(I2E) {
+  decode_op_rm(pc, id_dest, true, NULL, false);
+  decode_op_I(pc, id_src, true);
+}
+
+make_DHelper(mov_I2E) {
+  decode_op_rm(pc, id_dest, false, NULL, false);
+  decode_op_I(pc, id_src, true);
+}
+
+/* XX <- Ib
+ * eXX <- Iv
+ */
+make_DHelper(I2r) {
+  decode_op_r(pc, id_dest, true);
+  decode_op_I(pc, id_src, true);g_val);
 }
 
 /* Ob, Ov */
