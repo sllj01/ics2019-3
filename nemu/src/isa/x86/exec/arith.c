@@ -12,11 +12,11 @@ make_EHelper(sub) {
   operand_write(id_dest, &s0);
 
   //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // if (id_dest->width != 4) {
-  //   rtl_andi(&s1, &s1, 0xffffffffu >> ((4 - id_dest->width) * 8));
-  // }
+  if (id_dest->width != 4) {
+    rtl_andi(&s1, &s1, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
 
-  // rtl_update_ZFSF(&s1, id_dest->width);
+  rtl_update_ZFSF(&s1, id_dest->width);
 
   // // update CF
   // rtl_is_sub_carry(&s1, &s1, &s0);
