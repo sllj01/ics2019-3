@@ -51,7 +51,8 @@ static inline void rtl_is_sub_overflow(rtlreg_t* dest,
 static inline void rtl_is_sub_carry(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1) {
   // dest <- is_carry(src1 - src2)
-  TODO();
+  //TODO();
+  if 
 }
 
 static inline void rtl_is_add_overflow(rtlreg_t* dest,
@@ -68,7 +69,7 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    TODO(); \
+    if (*src==0) cpu.eflags.f = 0; else cpu.eflags.f = 1; \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
     TODO(); \

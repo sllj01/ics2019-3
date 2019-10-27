@@ -17,7 +17,11 @@ make_EHelper(xor) {
   //TODO();
   rtl_xor(&s0, &id_dest->val, &id_src->val);
   operand_write(id_dest, &s0);
-
+  
+  rtl_li(&ir, 0);
+  rtl_set_CF(&ir);
+  rtl_set_OF(&ir);
+  rtl_update_ZFSF(&id_dest->val, id_dest->width);
   print_asm_template2(xor);
 }
 
