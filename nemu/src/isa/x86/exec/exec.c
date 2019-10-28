@@ -52,12 +52,12 @@ make_group(gp7,
 /* TODO: Add more instructions!!! */
 
 static OpcodeEntry opcode_table [512] = {
-  /* 0x00 */	EMPTY, EMPTY, EMPTY, IDEX(E2G, add),
-  /* 0x04 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x08 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x0c */	EMPTY, EMPTY, EMPTY, EX(2byte_esc),
-  /* 0x10 */	EMPTY, EMPTY, EMPTY, IDEX(E2G, adc),
-  /* 0x14 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x00 */	IDEX(E2G, add),IDEX(E2G, add),IDEX(E2G, add),IDEX(E2G, add),
+  /* 0x04 */	IDEX(E2G, add),IDEX(E2G, add), EMPTY, EMPTY,
+  /* 0x08 */	IDEX(E2G, or), IDEX(E2G, or), IDEX(E2G, or), IDEX(E2G, or),
+  /* 0x0c */	IDEX(E2G, or), IDEX(E2G, or), EMPTY, EX(2byte_esc),
+  /* 0x10 */	IDEX(E2G, adc), IDEX(E2G, adc), IDEX(E2G, adc), IDEX(E2G, adc),
+  /* 0x14 */	IDEX(E2G, adc), IDEX(E2G, adc), EMPTY, EMPTY,
   /* 0x18 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x1c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x20 */	EMPTY, EMPTY, EMPTY, EMPTY,

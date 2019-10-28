@@ -18,3 +18,4 @@ make_EHelper(setcc);
 make_EHelper(nop);
 make_EHelper(add);
 make_EHelper(adc);
+make_EHelper(or);
