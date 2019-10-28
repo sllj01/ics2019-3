@@ -3,8 +3,8 @@
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   
-  if (pc != ref_r->pc) {
-    printf("input pc %x\n", pc);
+  if (cpu.pc != ref_r->pc) {
+    printf("input pc %x\n", cpu.pc);
     printf("ref pc %x\n", ref_r->pc);
     printf("wrong in pc\n");
     return false;
