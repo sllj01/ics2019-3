@@ -98,7 +98,7 @@ static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
   //TODO();
   cpu.eflags.SF = (*result>>(width*8-1))&0b1;
-  printf("SF_updated!  result is %u, flag is %u\n", *result, cpu.eflags.SF);
+  printf("SF_updated!  result is %x, flag is %u\n", *result, cpu.eflags.SF);
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
