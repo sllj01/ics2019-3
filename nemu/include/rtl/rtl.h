@@ -137,7 +137,18 @@ static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
 
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
-  TODO();
+  //TODO();
+  if ((*src1>>(width*8-1)&0b1)==1) {
+    unsigned a = 0xFFFFFFFF;
+    signed b = ((unsigned) 0b1) <<(width*8);
+    a = a&b;
+    *dest = *src1|a;
+  } else {
+    unsigned a = 0x00000000;
+    unsigned b = ((signed) 0b1) <<(width*8-1);
+    a = a|b;
+    *dest = *src1&a;
+  }
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
