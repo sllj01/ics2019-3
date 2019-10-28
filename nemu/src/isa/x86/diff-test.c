@@ -15,12 +15,30 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
       return false;
     }
   }
-  if (cpu.eflags.CF!=ref_r->eflags.CF) return false;
-  if (cpu.eflags.PF!=ref_r->eflags.PF) return false;
-  if (cpu.eflags.AF!=ref_r->eflags.AF) return false;
-  if (cpu.eflags.ZF!=ref_r->eflags.ZF) return false;
-  if (cpu.eflags.SF!=ref_r->eflags.SF) return false;
-  if (cpu.eflags.OF!=ref_r->eflags.OF) return false;
+  if (cpu.eflags.CF!=ref_r->eflags.CF) {
+    printf("wrong in CF\n");
+    return false;
+  }
+  if (cpu.eflags.PF!=ref_r->eflags.PF) {
+    printf("wrong in CF\n");
+    return false;
+  }
+  if (cpu.eflags.AF!=ref_r->eflags.AF) {
+    printf("wrong in CF\n");
+    return false;
+  }
+  if (cpu.eflags.ZF!=ref_r->eflags.ZF) {
+    printf("wrong in CF\n");
+    return false;
+  }
+  if (cpu.eflags.SF!=ref_r->eflags.SF) {
+    printf("wrong in CF\n");
+    return false;
+  }
+  if (cpu.eflags.OF!=ref_r->eflags.OF) {
+    printf("wrong in CF\n");
+    return false;
+  }
   return true;
 }
 
