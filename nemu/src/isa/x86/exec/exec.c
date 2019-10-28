@@ -42,7 +42,7 @@ make_group(gp4,
 /* 0xff */
 make_group(gp5,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)//INC, DEC, CALL, CALL, JMP, JMP, PUSH
+    EMPTY, EMPTY, EX(push), EMPTY)//INC, DEC, CALL, CALL, JMP, JMP, PUSH
 
 /* 0x0f 0x01*/
 make_group(gp7,
@@ -182,7 +182,7 @@ static OpcodeEntry opcode_table [512] = {
   /* 0xf0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf4 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf8 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0xfc */	EMPTY, EMPTY, EMPTY, IDEX(E,push)
+  /* 0xfc */	EMPTY, EMPTY, EMPTY, IDEX(E,gp5)
 };
 
 static make_EHelper(2byte_esc) {
