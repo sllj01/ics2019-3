@@ -11,7 +11,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   }
   for (int index=0; index < 8; index++) {
     if (cpu.gpr[index]._32 != ref_r->gpr[index]._32) {
-      printf("wrong in gpr[%d]\n", index);
+      printf("wrong in gpr[%d], value is %x\n", index, ref_r->gpr[index]._32);
       return false;
     }
   }
