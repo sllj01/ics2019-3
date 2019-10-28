@@ -73,7 +73,7 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    if (*src==0) cpu.eflags.f = 0; else cpu.eflags.f = 1; printf("%s set to %u", "cf/of", *src&0b1);\
+    if (*src==0) cpu.eflags.f = 0; else cpu.eflags.f = 1; printf("%s set to %u\n", "cf/of", *src&0b1);\
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
     TODO(); \
