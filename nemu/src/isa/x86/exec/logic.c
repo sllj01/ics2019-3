@@ -10,6 +10,7 @@ make_EHelper(test) {
 make_EHelper(and) {
   //TODO();
   rtl_and(&s0, &id_dest->val, &id_src->val);
+  printf("dest value is %x, src value is %x, result is %x\n", id_dest->val, id_src->val, s0);
   operand_write(id_dest, &s0);
 
   rtl_li(&ir, 0);
