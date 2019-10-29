@@ -40,3 +40,4 @@ make_EHelper(mul);
 make_EHelper(neg);
 make_EHelper(not);
 make_EHelper(movsx);
+make_EHelper(call_rm);
