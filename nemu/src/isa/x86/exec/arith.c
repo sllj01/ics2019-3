@@ -54,6 +54,7 @@ make_EHelper(inc) {
   //TODO();
   rtl_li(&ir, 1);
   rtl_add(&s0, &id_dest->val, &ir);
+  operand_write(id_dest, &s0);
 
   print_asm_template1(inc);
 }
@@ -62,6 +63,7 @@ make_EHelper(dec) {
   //TODO();
   rtl_li(&ir, 1);
   rtl_sub(&s0, &id_dest->val, &ir);
+  operand_write(id_dest, &s0);
 
   print_asm_template1(dec);
 }
