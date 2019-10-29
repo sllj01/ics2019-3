@@ -70,7 +70,10 @@ make_EHelper(dec) {
 }
 
 make_EHelper(neg) {
-  TODO();
+  //TODO();
+  rtl_li(&ir, 0);
+  rtl_sub(&s1, &ir, &id_dest->val);
+  operand_write(id_dest, &s1);
 
   print_asm_template1(neg);
 }
