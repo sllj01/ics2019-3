@@ -77,6 +77,7 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
   printf("entering rtl is add carry----------------------------------------------------\n");
   printf("res is %x, src1 is %x\n", *res, *src1);
   rtl_setrelop(RELOP_LTU, dest, res, src1);
+  printf("CF set to %x\n", *dest);
 }
 
 #define make_rtl_setget_eflags(f) \
