@@ -24,3 +24,6 @@ make_EHelper(jcc);
 make_EHelper(leave);
 make_EHelper(cmp);
 make_EHelper(movzx);
+make_EHelper(shr);
+make_EHelper(shl);
+make_EHelper(sar);
