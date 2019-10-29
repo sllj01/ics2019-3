@@ -26,7 +26,6 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
   }
 
   if (invert) {
-    printf("invert!!!!!!!!!!!!");
     rtl_xori(dest, dest, 0x1);
   }
   assert(*dest == 0 || *dest == 1);
