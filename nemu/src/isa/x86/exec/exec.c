@@ -31,7 +31,7 @@ make_group(gp2,
 
 /* 0xf6, 0xf7 */
 make_group(gp3,
-    EMPTY, EMPTY, EMPTY, EX(neg),
+    EX(and), EMPTY, EX(not), EX(neg),
     EX(mul), EX(imul1), EX(div), EX(idiv))//TEST, NONE, NOT, NEG, MUL, IMUL, DIV, IDIV
 
 /* 0xfe */
