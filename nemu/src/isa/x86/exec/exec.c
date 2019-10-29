@@ -42,7 +42,7 @@ make_group(gp4,
 /* 0xff */
 make_group(gp5,
     EX(inc), EX(dec), EX(call_rm), EMPTY,
-    EX(jmp), EMPTY, EX(push), EMPTY)//INC, DEC, CALL, CALL, JMP, JMP, PUSH
+    EX(jmp_rm), EMPTY, EX(push), EMPTY)//INC, DEC, CALL, CALL, JMP, JMP, PUSH
 
 /* 0x0f 0x01*/
 make_group(gp7,
