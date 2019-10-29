@@ -40,7 +40,7 @@ make_EHelper(sub) {
 
 make_EHelper(cmp) {
   //TODO();
-  rtl_sext(&id_src->val, &id_src->val, id_src->width);
+  // rtl_sext(&id_src->val, &id_src->val, id_src->width);
   rtl_sub(&s0, &id_dest->val, &id_src->val);
   printf("----------------------dest and src values are %x, %x\n", id_dest->val, id_src->val);
   rtl_is_sub_carry(&s1, &s0, &id_dest->val);
