@@ -1,10 +1,11 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  printf("add values are %x, %x----------------", id_dest->val, id_src->val);
+  printf("add values are %x, %x----------------\n", id_dest->val, id_src->val);
   rtl_add(&s0, &id_dest->val, &id_src->val);
   rtl_is_add_carry(&s1, &s0, &id_dest->val);
   operand_write(id_dest, &s0);
+  printf("add result is %x", s0);
 
   rtl_update_ZFSF(&s0, id_dest->width);
 
