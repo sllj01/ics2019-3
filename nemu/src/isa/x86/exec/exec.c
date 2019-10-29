@@ -41,7 +41,7 @@ make_group(gp4,
 
 /* 0xff */
 make_group(gp5,
-    EMPTY, EMPTY, EX(call), EMPTY,
+    EMPTY, EMPTY, EMPTY, EMPTY,
     EMPTY, EMPTY, EX(push), EMPTY)//INC, DEC, CALL, CALL, JMP, JMP, PUSH
 
 /* 0x0f 0x01*/
@@ -151,10 +151,10 @@ static OpcodeEntry opcode_table [512] = {
   /* 0x74 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x78 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x7c */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x80 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x84 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x88 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x8c */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x80 */	IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),
+  /* 0x84 */	IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),
+  /* 0x88 */	IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),
+  /* 0x8c */	IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),IDEX(J, jcc),
   /* 0x90 */	IDEXW(setcc_E, setcc, 1), IDEXW(setcc_E, setcc, 1), IDEXW(setcc_E, setcc, 1), IDEXW(setcc_E, setcc, 1),
   /* 0x94 */	IDEXW(setcc_E, setcc, 1), IDEXW(setcc_E, setcc, 1), IDEXW(setcc_E, setcc, 1), IDEXW(setcc_E, setcc, 1),
   /* 0x98 */	EMPTY, EMPTY, EMPTY, EMPTY,
