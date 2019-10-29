@@ -30,3 +30,4 @@ make_EHelper(sar);
 make_EHelper(inc);
 make_EHelper(dec);
 make_EHelper(jmp);
+make_EHelper(imul);
