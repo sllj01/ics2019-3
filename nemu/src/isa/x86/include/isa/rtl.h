@@ -74,10 +74,10 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1) {
   // dest <- is_carry(src1 + src2)
   //TODO();
-  printf("entering rtl is add carry----------------------------------------------------\n");
-  printf("res is %x, src1 is %x\n", *res, *src1);
+  // printf("entering rtl is add carry----------------------------------------------------\n");
+  // printf("res is %x, src1 is %x\n", *res, *src1);
   rtl_setrelop(RELOP_LTU, dest, res, src1);
-  printf("CF set to %x\n", *dest);
+  // printf("CF set to %x\n", *dest);
 }
 
 #define make_rtl_setget_eflags(f) \
