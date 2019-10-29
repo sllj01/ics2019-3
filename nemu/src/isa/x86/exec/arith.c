@@ -9,7 +9,7 @@ make_EHelper(add) {
 
   rtl_update_ZFSF(&s0, id_dest->width);
 
-  rtl_get_CF(&s1);
+  rtl_set_CF(&s1);
 
   rtl_is_add_overflow(&s1, &s0, &id_dest->val, &id_src->val, id_dest->width);
   rtl_set_OF(&s1);
@@ -72,7 +72,6 @@ make_EHelper(adc) {
   // s0 = dest + src
   rtl_add(&s0, &id_dest->val, &id_src->val);
   // s1 = s0 + CF
-  printf("before withdral??????????????????????????");
   rtl_get_CF(&s1);
   rtl_add(&s1, &s0, &s1);
 
