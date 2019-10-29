@@ -39,3 +39,4 @@ make_EHelper(div);
 make_EHelper(mul);
 make_EHelper(neg);
 make_EHelper(not);
+make_EHelper(movsx);
