@@ -10,7 +10,8 @@ make_EHelper(test) {
   rtl_set_OF(&ir);
   rtl_set_CF(&ir);
   rtl_update_ZFSF(&s0, id_dest->width);
-  printf("after set zf, zf is %x----------------------", cpu.eflags.ZF);
+  printf("res is %x-----------------------\n", s0);
+  printf("after set zf, zf is %x----------------------\n", cpu.eflags.ZF);
 
   print_asm_template2(test);
 }
