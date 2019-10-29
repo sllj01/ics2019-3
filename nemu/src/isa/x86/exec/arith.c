@@ -57,7 +57,7 @@ make_EHelper(inc) {
   rtl_li(&ir, 1);
   rtl_add(&s0, &id_dest->val, &ir);
   operand_write(id_dest, &s0);
-
+  rtl_update_ZFSF(&s0, id_dest->val);
   print_asm_template1(inc);
 }
 
