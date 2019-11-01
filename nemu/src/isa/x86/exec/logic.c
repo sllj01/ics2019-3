@@ -5,14 +5,14 @@ make_EHelper(test) {
   //TODO();
   rtl_and(&s0, &id_dest->val, &id_src->val);
 
-  printf("dest is %x, src is %x--------------------\n", id_dest->val, id_src->val);
+  // printf("dest is %x, src is %x--------------------\n", id_dest->val, id_src->val);
 
   rtl_li(&ir, 0);
   rtl_set_OF(&ir);
   rtl_set_CF(&ir);
   rtl_update_ZFSF(&s0, id_dest->width);
-  printf("res is %x-----------------------\n", s0);
-  printf("after set zf, zf is %x----------------------\n", cpu.eflags.ZF);
+  // printf("res is %x-----------------------\n", s0);
+  // printf("after set zf, zf is %x----------------------\n", cpu.eflags.ZF);
 
   print_asm_template2(test);
 }

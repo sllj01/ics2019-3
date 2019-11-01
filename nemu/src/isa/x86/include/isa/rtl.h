@@ -82,10 +82,10 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    if (*src==0) cpu.eflags.f = 0; else cpu.eflags.f = 1; printf("%s set to %u\n", "cf/of", *src&0b1);\
+    if (*src==0) cpu.eflags.f = 0; else cpu.eflags.f = 1;\
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
-    *dest = cpu.eflags.f; printf("flag %u withdraw\n", cpu.eflags.f); \
+    *dest = cpu.eflags.f; \
   }
 
 make_rtl_setget_eflags(CF)
@@ -99,14 +99,14 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   rtl_shli(&t0, result, 32 - width * 8);
   if(t0 == 0) cpu.eflags.ZF = 1;
   else cpu.eflags.ZF = 0;
-  printf("ZF_updated!  result is %x, flag is %u\n", *result, cpu.eflags.ZF);
+  // printf("ZF_updated!  result is %x, flag is %u\n", *result, cpu.eflags.ZF);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
   //TODO();
   cpu.eflags.SF = (*result>>(width*8-1))&0b1;
-  printf("SF_updated!  result is %x, flag is %u\n", *result, cpu.eflags.SF);
+  // printf("SF_updated!  result is %x, flag is %u\n", *result, cpu.eflags.SF);
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
