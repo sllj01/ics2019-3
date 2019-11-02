@@ -55,7 +55,7 @@ void init_vga() {
 
   //add pio map and mmio map for anstract register sync!!!!!!!      (by derek)
   add_pio_map("sync", SYNC_PORT, (void*)sync_port_base, 24, vga_io_handler);
-  add_mmio_map("sync", SYNC_MMIO, (void*)sync_port_base, 8, vga_io_handler);
+  add_mmio_map("sync", SYNC_MMIO, (void*)sync_port_base, 24, vga_io_handler);
 
   vmem = (void *)new_space(0x80000);
   add_mmio_map("vmem", VMEM, (void *)vmem, 0x80000, NULL);
