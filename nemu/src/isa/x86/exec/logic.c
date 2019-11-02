@@ -85,6 +85,7 @@ make_EHelper(rol) {
     rtl_add(&s1, &s0, &s1);
     operand_write(id_dest, &s1);
     rtl_set_CF(&s0);
+    t--;
   }
 }
 
