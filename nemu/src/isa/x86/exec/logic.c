@@ -74,6 +74,20 @@ make_EHelper(shl) {
   print_asm_template2(shl);
 }
 
+make_EHelper(rol) {
+  int t = id_src->val;
+  while(t) {
+    rtl_get_CF(&s1);
+    rtl_msb(&s0, &id_dest->val, id_dest->width);
+    rtl_xor(&s1, &s0, &s1);
+    rtl_set_OF(&s1);
+    rtl_shli(&s1, &id_dest->val, 1);
+    rtl_add(&s1, &s0, &s1);
+    operand_write(id_dest, &s1);
+    rtl_set_CF(&s0);
+  }
+}
+
 make_EHelper(shr) {
   //TODO();
   // unnecessary to update CF and OF in NEMU
@@ -102,4 +116,3 @@ make_EHelper(not) {
   print_asm_template1(not);
 }
 
-// make_EHelper()
