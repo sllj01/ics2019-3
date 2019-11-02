@@ -45,7 +45,7 @@ void init_vga() {
   texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
       SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
 
-  screensize_port_base = (void *)new_space(8);
+  screensize_port_base = (void *)new_space(4);
   screensize_port_base[0] = ((SCREEN_W) << 16) | (SCREEN_H);
   // allocate space for abstract register sync!!!!!!    (by derek)
   sync_port_base = (void*)new_space(24);
