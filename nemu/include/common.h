@@ -20,6 +20,10 @@
 typedef uint8_t bool;
 
 typedef uint32_t rtlreg_t;
+struct struct_IDTR{
+  uint16_t length;
+  uint32_t base;
+};
 
 typedef uint32_t paddr_t;
 typedef uint32_t vaddr_t;
