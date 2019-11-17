@@ -3,11 +3,13 @@ extern void raise_intr(uint32_t, vaddr_t);
 
 make_EHelper(lidt) {
   //TODO();
+  printf("before lidt\n");
   uint16_t length = vaddr_read(id_dest->val, 2);
   uint32_t base = vaddr_read(id_dest->val+2, 4);
   IDTR.length = length;
   if (id_dest->width == 2) IDTR.base = base & 0xFFFFFF;
   else IDTR.base = base;
+  printf("finish lidt\n");
   print_asm_template1(lidt);
 }
 
