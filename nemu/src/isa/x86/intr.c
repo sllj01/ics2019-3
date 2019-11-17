@@ -5,8 +5,8 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * That is, use ``NO'' to index the IDT.
    */
-  printf("before jump\n");
   rtl_push(&cpu.FLAGS);
+    printf("before jump\n");
   rtl_push(&cpu.cs);
   rtl_push(&cpu.pc);
   uint32_t base = IDTR.base;
