@@ -12,6 +12,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   // uint64_t describe = ((uint64_t)vaddr_read(base+NO*8, 4)<<32) | vaddr_read(base+NO*8+4, 4);
   // uint32_t jmp_des = (describe>>48)<<16 | (describe & 0xFFFF);
   uint32_t jmp_des = vaddr_read(base+NO*8, 2)<<16 | vaddr_read(base+NO*8+6, 2);
+  printf("before jump\n");
   rtl_j(jmp_des);
 }
 
