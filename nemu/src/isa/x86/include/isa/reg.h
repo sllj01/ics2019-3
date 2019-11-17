@@ -40,6 +40,7 @@ typedef struct {
                 unsigned OF:1;
                 unsigned not_concerned:20;} eflags;
   };
+  uint32_t cs;
 
 } CPU_state;
 

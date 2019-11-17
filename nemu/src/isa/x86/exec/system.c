@@ -1,4 +1,5 @@
 #include "cpu/exec.h"
+extern void raise_intr(uint32_t, vaddr_t);
 
 make_EHelper(lidt) {
   TODO();
@@ -21,7 +22,8 @@ make_EHelper(mov_cr2r) {
 }
 
 make_EHelper(int) {
-  TODO();
+  //TODO();
+  raise_intr(id_dest->val, cpu.pc);
 
   print_asm("int %s", id_dest->str);
 

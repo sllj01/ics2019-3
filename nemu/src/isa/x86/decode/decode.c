@@ -281,8 +281,7 @@ make_DHelper(in_I2a) {
   decode_op_I(pc, id_src, true);
   decode_op_a(pc, id_dest, false);
 }
-
-make_DHelper(in_dx2a) {
+make_EHelper(in_dx2a){
   id_src->type = OP_TYPE_REG;
   id_src->reg = R_DX;
   rtl_lr(&id_src->val, R_DX, 2);
