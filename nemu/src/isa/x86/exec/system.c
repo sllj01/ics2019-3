@@ -3,7 +3,7 @@ extern void raise_intr(uint32_t, vaddr_t);
 
 make_EHelper(lidt) {
   //TODO();
-  printf("%u", id_dest->val);
+  printf("%x", id_dest->val);
 
 
   print_asm_template1(lidt);
