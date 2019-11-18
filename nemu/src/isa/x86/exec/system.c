@@ -28,6 +28,7 @@ make_EHelper(mov_cr2r) {
 make_EHelper(int) {
   //TODO();
   raise_intr(id_dest->val, decinfo.seq_pc);
+  printf("%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n-------------", cpu.eax, cpu.ecx, cpu.edx, cpu.ebx, cpu.esp, cpu.ebp, cpu.esi, cpu.edi);
 
   print_asm("int %s", id_dest->str);
 
