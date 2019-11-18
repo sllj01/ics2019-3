@@ -37,7 +37,8 @@ make_EHelper(int) {
 make_EHelper(iret) {
 
   rtl_pop(&s0);
-  cpu.pc = s0;
+  decinfo.jmp_pc = s0;
+  rtl_j(s0);
   rtl_pop(&s0);
   cpu.cs = s0;
   rtl_pop(&s0);
