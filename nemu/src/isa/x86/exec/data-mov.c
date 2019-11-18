@@ -23,15 +23,27 @@ make_EHelper(pop) {
 make_EHelper(pusha) {
   //TODO();
   if (id_dest->width==2) {
-    for (int index = 0;index<8; index++) {
-      rtl_lr(&s0, index, 2);
-      rtl_push(&s0);
+    s1 = cpu.gpr[4]._16;
+    for (int index = 0;index <8; index++) {
+      s0 = cpu.gpr[index]._16;
+      if (index!=4) {
+        rtl_push(&s0);
+      }
+      else {
+        rtl_push(&s1);
+      }
     }
   }
   else {
+    s1 = cpu.gpr[4]._32;
     for (int index = 0;index <8; index++) {
-      rtl_lr(&s0, index, 4);
-      rtl_push(&s0);
+      s0 = cpu.gpr[index]._32;
+      if (index!=4) {
+        rtl_push(&s0);
+      }
+      else {
+        rtl_push(&s1);
+      }
     }
   }
 
