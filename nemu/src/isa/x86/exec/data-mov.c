@@ -21,7 +21,23 @@ make_EHelper(pop) {
 }
 
 make_EHelper(pusha) {
-  TODO();
+  //TODO();
+  if (id_dest->width==2) {
+    for (int index = 0;index<8; index++) {
+      rtl_lr(&s0, index, 2);
+      rtl_push(&s0);
+    }
+  }
+  else {
+    rtl_push(&(cpu.gpr[0]._32));
+    rtl_push(&(cpu.gpr[1]._32));
+    rtl_push(&(cpu.gpr[2]._32));
+    rtl_push(&(cpu.gpr[3]._32));
+    rtl_push(&(cpu.gpr[4]._32));
+    rtl_push(&(cpu.gpr[5]._32));
+    rtl_push(&(cpu.gpr[6]._32));
+    rtl_push(&(cpu.gpr[7]._32));
+  }
 
   print_asm("pusha");
 }
