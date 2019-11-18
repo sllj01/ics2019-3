@@ -35,7 +35,7 @@ make_EHelper(int) {
 }
 
 make_EHelper(iret) {
-  rtl_pop(&s0);
+
   rtl_pop(&s0);
   cpu.pc = s0;
   rtl_pop(&s0);
