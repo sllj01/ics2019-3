@@ -57,7 +57,7 @@ void isa_reg_display() {
 	printf("EBP -->  0x%08x    %u\n", cpu.ebp, cpu.ebp);
 	printf("ESI -->  0x%08x    %u\n", cpu.esi, cpu.esi);
 	printf("EDI -->  0x%08x    %u\n", cpu.edi, cpu.edi);
-	printf("EDI -->  0x%08x    %u\n", cpu.edi, cpu.pc);
+	printf("EIP -->  0x%08x    %u\n", cpu.edi, cpu.pc);
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
