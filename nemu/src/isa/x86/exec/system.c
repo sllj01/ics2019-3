@@ -1,8 +1,8 @@
 #include "cpu/exec.h"
 extern void raise_intr(uint32_t, vaddr_t);
-
+//------------------------------------------------------------------------------------------
 make_EHelper(lidt) {
-  //TODO();
+  TODO();
   uint16_t length = vaddr_read(id_dest->addr, 2);
   uint32_t base = vaddr_read(id_dest->addr+2, 4);
   IDTR.length = length;
