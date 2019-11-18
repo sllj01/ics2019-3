@@ -38,12 +38,12 @@ make_EHelper(pusha) {
   else {
     for (int index = 0;index <8; index++) {
       s0 = cpu.gpr[index]._32;
-      if (index!=4) {
+      // if (index!=4) {
         rtl_push(&s0);
-      }
-      else {
+      // }
+      // else {
         rtl_push(&s1);
-      }
+      // }
     }
   }
 
