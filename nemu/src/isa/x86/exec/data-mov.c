@@ -42,7 +42,7 @@ make_EHelper(pusha) {
         rtl_push(&s0);
       // }
       // else {
-        rtl_push(&s1);
+        // rtl_push(&s1);
       // }
     }
   }
