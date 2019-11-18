@@ -51,7 +51,19 @@ make_EHelper(pusha) {
 }
 
 make_EHelper(popa) {
-  TODO();
+  //TODO();
+  if (id_dest->width==2) {
+    for (int index = 0;index<8; index++) {
+      rtl_pop(&s0);
+      if (index!=3) cpu.gpr[7-index]._16 = s0 & 0xFFFF;
+    }
+  }
+  else {
+    for (int index = 0;index<8;index++) {
+      rtl_pop(&s0);
+      if (index!=3) cpu.gpr[7-index]._32 = s0;
+    }
+  }
 
   print_asm("popa");
 }
