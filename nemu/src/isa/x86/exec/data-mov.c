@@ -22,6 +22,8 @@ make_EHelper(pop) {
 
 make_EHelper(pusha) {
   //TODO();
+    printf("%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n-------------", cpu.eax, cpu.ecx, cpu.edx, cpu.ebx, cpu.esp, cpu.ebp, cpu.esi, cpu.edi);
+  
   s1 = cpu.gpr[4]._32;
   if (id_dest->width==2) {
     for (int index = 0;index <8; index++) {
