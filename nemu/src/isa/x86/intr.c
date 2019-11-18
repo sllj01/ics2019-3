@@ -8,6 +8,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   rtl_push(&cpu.FLAGS);
   rtl_push(&cpu.cs);
   rtl_push(&cpu.pc);
+  rtl_push(&NO);
   uint32_t base = IDTR.base;
   // uint64_t describe = ((uint64_t)vaddr_read(base+NO*8, 4)<<32) | vaddr_read(base+NO*8+4, 4);
   // uint32_t jmp_des = (describe>>48)<<16 | (describe & 0xFFFF);
