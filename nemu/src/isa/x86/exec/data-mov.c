@@ -22,20 +22,20 @@ make_EHelper(pop) {
 
 make_EHelper(pusha) {
   //TODO();
+  s1 = cpu.gpr[4]._32;
   if (id_dest->width==2) {
-    s1 = cpu.gpr[4]._16;
     for (int index = 0;index <8; index++) {
       s0 = cpu.gpr[index]._16;
       if (index!=4) {
         rtl_push(&s0);
       }
       else {
+        s1 &= 0xFFFF;
         rtl_push(&s1);
       }
     }
   }
   else {
-    s1 = cpu.gpr[4]._32;
     for (int index = 0;index <8; index++) {
       s0 = cpu.gpr[index]._32;
       if (index!=4) {
