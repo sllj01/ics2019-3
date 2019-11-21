@@ -31,7 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t entry_filesize = phdr[index].p_filesz;
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
-    Log("%u\n", entry_filesize);
+    Log("%d\n", entry_filesize);
     assert(entry_filesize<1024);
 
     ramdisk_read(&buf, entry_offset, entry_filesize);
