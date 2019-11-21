@@ -24,7 +24,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   uint16_t phentsize = header.e_phentsize;
 
   Elf_Phdr phdr[phnum];
-  char buf[1024];
+  char buf[10240];
   ramdisk_read(&phdr, phdr_offset, phnum*phentsize);
   for (int index=0; index<phnum; index++) {
     uint32_t entry_offset = phdr[index].p_offset;
@@ -32,7 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
 
-    assert(entry_filesize<1024);
+    assert(entry_filesize<10240);
 
     ramdisk_read(&buf, entry_offset, entry_filesize);
     memcpy((void*) entry_vaddr, &buf, entry_filesize);
