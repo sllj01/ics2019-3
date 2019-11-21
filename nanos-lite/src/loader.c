@@ -9,8 +9,36 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+size_t ramdisk_read(void*, size_t, size_t);
+size_t ramdisk_write(const void*, size_t, size_t);
+void init_ramdisk();
+size_t get_ramdisk_size();
+
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  TODO();
+  //TODO();
+  Elf_Ehdr header;
+  ramdisk_read(&header, 0, sizeof(header));
+  uint32_t phdr_offset = header.e_phoff;
+  uint16_t phnum = header.e_phnum;
+  uint16_t phentsize = header.e_phentsize;
+
+  Elf_Phdr phdr[phnum];
+  char buf[256];
+  ramdisk_read(&phdr, phdr_offset, phnum*phentsize);
+  for (int index=0; index<phnum; index++) {
+    uint32_t entry_offset = phdr[index].p_offset;
+    uint32_t entry_filesize = phdr[index].p_filesz;
+    uint32_t entry_memsize = phdr[index].p_memsz;
+    uint32_t entry_vaddr = phdr[index].p_vaddr;
+
+    assert(entry_filesize<256);
+
+    ramdisk_read(&buf, entry_offset, entry_filesize);
+    memcpy((void*) entry_vaddr, &buf, entry_filesize);
+    memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
+  }
+
   return 0;
 }
 
