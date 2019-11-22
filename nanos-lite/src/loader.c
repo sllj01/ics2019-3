@@ -38,8 +38,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     Log("%d\n", entry_filesize);
     assert(entry_filesize<30000);
 
-    ramdisk_read(&buf, entry_offset, entry_filesize);
-    memcpy((void*) entry_vaddr, &buf, entry_filesize);
+    ramdisk_read(buf, entry_offset, entry_filesize);
+    printf("first heandled\n");
+    memcpy((void*) entry_vaddr, buf, entry_filesize);
     memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
   }
 
