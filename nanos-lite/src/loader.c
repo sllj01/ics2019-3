@@ -18,6 +18,7 @@ size_t get_ramdisk_size();
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr header;
+  Log("size of header is %d\n", sizeof(header));
   ramdisk_read(&header, 0, sizeof(header));
   uint32_t phdr_offset = header.e_phoff;
   uint16_t phnum = header.e_phnum;
