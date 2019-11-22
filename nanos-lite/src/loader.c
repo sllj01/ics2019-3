@@ -18,14 +18,14 @@ size_t get_ramdisk_size();
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr header;
-  Log("----------------------------------------------------");
-  Log("size of header is %d\n", sizeof(header));
+  // Log("----------------------------------------------------");
+  // Log("size of header is %d\n", sizeof(header));
   ramdisk_read(&header, 0, sizeof(header));
   uint32_t phdr_offset = header.e_phoff;
   uint16_t phnum = header.e_phnum;
-  Log("num of headers is %d\n", phnum);
+  // Log("num of headers is %d\n", phnum);
   uint16_t phentsize = header.e_phentsize;
-  Log("size of entrysize is %d\n", phentsize);
+  // Log("size of entrysize is %d\n", phentsize);
 
   Elf_Phdr phdr[phnum];
   char buf[30000];
@@ -35,11 +35,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t entry_filesize = phdr[index].p_filesz;
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
-    Log("%d\n", entry_filesize);
+    // Log("%d\n", entry_filesize);
     assert(entry_filesize<30000);
 
     ramdisk_read(buf, entry_offset, entry_filesize);
-    printf("%p\n", (void*) entry_vaddr);
+    // printf("%p\n", (void*) entry_vaddr);
     memcpy((void*) entry_vaddr, buf, entry_filesize);
     memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
   }
