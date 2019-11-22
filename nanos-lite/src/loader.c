@@ -25,6 +25,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   uint16_t phnum = header.e_phnum;
   // Log("num of headers is %d\n", phnum);
   uint16_t phentsize = header.e_phentsize;
+  uint32_t program_entry = header.e_entry;
   // Log("size of entrysize is %d\n", phentsize);
 
   Elf_Phdr phdr[phnum];
@@ -44,7 +45,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
   }
 
-  return 0;
+  return program_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
