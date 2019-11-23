@@ -1,5 +1,6 @@
 #include "common.h"
 #include "syscall.h"
+extern uint32_t edata;
 
 uint32_t sys_exit(_Context* c) {
   _halt(c->GPR2);
@@ -22,6 +23,12 @@ uint32_t sys_write(_Context* c) {
   return (uint32_t) count;
 }
 
+uint32_t sys_brk(_Context* c) {
+  uint32_t new_program_break = c->GPR2;
+  edata = new_program_break;
+  return 0;////////////                  possibly return -1, but not discussed in PA3.  CONFUSED
+}
+
 
 
 _Context* do_syscall(_Context *c) {
@@ -31,7 +38,7 @@ _Context* do_syscall(_Context *c) {
   switch (a[0]) {
     case SYS_exit: 
       // Log("    sys_exit\n"); 
-      c->GPRx = sys_exit(c); break;     //////////which parameter should I pass to halt???   Conf
+      c->GPRx = sys_exit(c); break;     //////////which parameter should I pass to halt???   CONFUSED
     case SYS_yield: 
       // Log("   sys_yield\n"); 
       c->GPRx = sys_yield(c); break;
