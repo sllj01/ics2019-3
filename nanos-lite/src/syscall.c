@@ -15,6 +15,7 @@ uint32_t sys_write(_Context* c) {
   int fd = c->GPR2;
   char* buf = (char*) c->GPR3;
   size_t count = (size_t) c->GPR4;
+  printf("--------------%d", count);
 
   if (fd==1||fd==2) {
     for (int index=0; index<count; index++) _putc(*(buf+index));
