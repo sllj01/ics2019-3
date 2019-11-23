@@ -24,7 +24,9 @@ uint32_t sys_write(_Context* c) {
 }
 
 uint32_t sys_brk(_Context* c) {
+
   uint32_t new_program_break = c->GPR2;
+    printf("%d, %d\n", edata, new_program_break);
   edata = new_program_break;
   return 0;////////////                  possibly return -1, but not discussed in PA3.  CONFUSED
 }
