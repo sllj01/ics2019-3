@@ -29,9 +29,15 @@ _Context* do_syscall(_Context *c) {
   a[0] = c->GPR1;
 
   switch (a[0]) {
-    case SYS_exit: Log("    sys_exit\n"); c->GPRx = sys_exit(c); break;     //////////which parameter should I pass to halt???   Conf
-    case SYS_yield: Log("   sys_yield\n"); c->GPRx = sys_yield(c); break;
-    case SYS_write: /*Log("   sys_write\n")*/; c->GPRx = sys_write(c); break;
+    case SYS_exit: 
+      // Log("    sys_exit\n"); 
+      c->GPRx = sys_exit(c); break;     //////////which parameter should I pass to halt???   Conf
+    case SYS_yield: 
+      // Log("   sys_yield\n"); 
+      c->GPRx = sys_yield(c); break;
+    case SYS_write: 
+      // Log("   sys_write\n"); 
+      c->GPRx = sys_write(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
