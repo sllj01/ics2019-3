@@ -48,7 +48,7 @@ _Context* do_syscall(_Context *c) {
       // Log("   sys_write\n"); 
       c->GPRx = sys_write(c); break;
     case SYS_brk:
-      Log("    sys_brk\n");
+      // Log("    sys_brk\n");
       c->GPRx = sys_brk(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
