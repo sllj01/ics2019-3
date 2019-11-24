@@ -65,7 +65,7 @@ size_t sys_close(_Context* c) {
 size_t sys_brk(_Context* c) {
 
   uint32_t new_program_break = c->GPR2;
-    printf("%d, %d\n", end, new_program_break);
+    // printf("%d, %d\n", end, new_program_break);
   end = new_program_break;
   return 0;////////////                  possibly return -1, but not discussed in PA3.  CONFUSED
 }
@@ -84,22 +84,22 @@ _Context* do_syscall(_Context *c) {
       // Log("   sys_yield\n"); 
       c->GPRx = sys_yield(c); break;
     case SYS_open:
-      Log("   sys_open");
+      // Log("   sys_open");
       c->GPRx = sys_open(c); break;
     case SYS_read:
-      Log("   sys_read");
+      // Log("   sys_read");
       c->GPRx = sys_read(c); break;
     case SYS_write: 
-      Log("   sys_write\n"); 
+      // Log("   sys_write\n"); 
       c->GPRx = sys_write(c); break;
     case SYS_lseek:
-      Log("   sys_lseek");
+      // Log("   sys_lseek");
       c->GPRx = sys_lseek(c); break;
     case SYS_close:
-      Log("   sys_close");
+      // Log("   sys_close");
       c->GPRx = sys_close(c); break;
     case SYS_brk:
-      Log("    sys_brk\n");
+      // Log("    sys_brk\n");
       c->GPRx = sys_brk(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
