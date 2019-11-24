@@ -18,6 +18,7 @@ extern uint8_t ramdisk_start;
 int fs_open(const char*, int, int);
 off_t fs_lseek(int, __off_t, int);
 int fs_close(int);
+size_t fs_read(int, void*, size_t);
 
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
@@ -64,12 +65,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   // Log("-------------------------------------------------------------------");
   int fd = fs_open(filename, 0, 0);
-  size_t locat = fs_lseek(fd, 0, 1);
 
   Elf_Ehdr header;
   // Log("size of header is %d\n", sizeof(header));
-  Log("which?in main 1?\n");
-  ramdisk_read(&header, locat, sizeof(header));
+  fs_read(fd, (void*)&header, sizeof(header));
   uint32_t phdr_offset = header.e_phoff;
   uint16_t phnum = header.e_phnum;
   // Log("num of headers is %d\n", phnum);
@@ -79,8 +78,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   Elf_Phdr phdr[phnum];
   char buf[25000];
-  Log("which?ina main 2?\n");
-  ramdisk_read(&phdr, phdr_offset, phnum*phentsize);
+  fs_lseek(fd, phdr_offset, 0);
+  fs_read(fd, (void*) &phdr, phnum*phentsize);
+
   for (int index=0; index<phnum; index++) {
     uint32_t pt_load = phdr[index].p_type;
     if (pt_load != PT_LOAD) continue;
@@ -94,12 +94,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     int left = entry_filesize;
     while (left>0) {
       if (left>=25000){
-        Log("which?in 1?\n");
         ramdisk_read(buf, entry_offset, 25000);
         left-=25000;
       }
       else {
-        Log("which?in 2?\n");
         ramdisk_read(buf, entry_offset, left);
         left-=left;
       }
