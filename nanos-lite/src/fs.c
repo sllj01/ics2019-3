@@ -2,6 +2,7 @@
 
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
+typedef size_t off_t;
 
 typedef struct {
   char *name;
@@ -82,7 +83,7 @@ int fs_open(const char* pathname, int flags, int mode) {
   panic("no such file!\n"); //no pathname file is found
 }
 
-__off_t fs_lseek(int fd, __off_t offset, int whence) {
+off_t fs_lseek(int fd, __off_t offset, int whence) {
   switch (whence) {
     case SEEK_SET: file_table[fd].open_offset = offset; break;
     case SEEK_CUR: file_table[fd].open_offset += offset; break;
