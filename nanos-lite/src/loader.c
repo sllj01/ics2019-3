@@ -71,10 +71,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   fs_read(fd, (void*)&header, sizeof(header));
   uint32_t phdr_offset = header.e_phoff;
   uint16_t phnum = header.e_phnum;
-  Log("num of headers is %d\n", phnum);
+  // Log("num of headers is %d\n", phnum);
   uint16_t phentsize = header.e_phentsize;
   uint32_t program_entry = header.e_entry;
-  Log("size of entrysize is %d\n", phentsize);
+  // Log("size of entrysize is %d\n", phentsize);
 
   Elf_Phdr phdr[phnum];
   char buf[25000];
