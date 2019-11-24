@@ -77,7 +77,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // Log("size of entrysize is %d\n", phentsize);
 
   Elf_Phdr phdr[phnum];
-  char buf[25000];
+  char buf[10000];
   fs_lseek(fd, phdr_offset, 0);
   fs_read(fd, (void*) &phdr, phnum*phentsize);
 
@@ -93,8 +93,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     //血与痛的教训。buf切勿定义过大，否则极有可能缓冲区溢出导致覆盖IDTR。
     int left = entry_filesize;
     while (left>0) {
-      if (left>=25000){
-        fs_read(fd, (void*) buf, 25000);
+      if (left>=10000){
+        fs_read(fd, (void*) buf, 10000);
         left-=25000;
       }
       else {
