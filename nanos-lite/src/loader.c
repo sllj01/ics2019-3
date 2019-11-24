@@ -13,6 +13,7 @@ size_t ramdisk_read(void*, size_t, size_t);
 size_t ramdisk_write(const void*, size_t, size_t);
 void init_ramdisk();
 size_t get_ramdisk_size();
+extern uint8_t ramdisk_start;
 
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
@@ -45,7 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     // // printf("%p\n", (void*) entry_vaddr);
     // memcpy((void*) entry_vaddr, buf, entry_filesize);
 
-    ramdisk_write((void*) entry_offset, entry_vaddr, entry_filesize);
+    ramdisk_write((void*) entry_offset, entry_vaddr-ramdisk_start, entry_filesize);
     memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
   }
   return program_entry;
