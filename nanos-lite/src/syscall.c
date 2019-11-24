@@ -8,7 +8,7 @@ extern __off_t fs_lseek(int, __off_t, int);
 extern int fs_close(int);
 
 size_t sys_exit(_Context* c) {
-  _halt(c->GPR2);
+  _halt(c->GPR3);
   return c->GPRx;
 }
 
