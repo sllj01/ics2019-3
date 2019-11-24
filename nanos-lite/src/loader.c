@@ -71,10 +71,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   fs_read(fd, (void*)&header, sizeof(header));
   uint32_t phdr_offset = header.e_phoff;
   uint16_t phnum = header.e_phnum;
-  // Log("num of headers is %d\n", phnum);
+  Log("num of headers is %d\n", phnum);
   uint16_t phentsize = header.e_phentsize;
   uint32_t program_entry = header.e_entry;
-  // Log("size of entrysize is %d\n", phentsize);
+  Log("size of entrysize is %d\n", phentsize);
 
   Elf_Phdr phdr[phnum];
   char buf[25000];
@@ -88,7 +88,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t entry_filesize = phdr[index].p_filesz;
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
-    // Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
+    Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
 
     //血与痛的教训。buf切勿定义过大，否则极有可能缓冲区溢出导致覆盖IDTR。
     int left = entry_filesize;
