@@ -89,16 +89,16 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
     Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
-
+    fs_lseek(fd, entry_offset, 0);
     //血与痛的教训。buf切勿定义过大，否则极有可能缓冲区溢出导致覆盖IDTR。
     int left = entry_filesize;
     while (left>0) {
       if (left>=25000){
-        ramdisk_read(buf, entry_offset, 25000);
+        fs_read(fd, (void*) buf, 25000);
         left-=25000;
       }
       else {
-        ramdisk_read(buf, entry_offset, left);
+        fs_read(fd, (void*) buf, left);
         left-=left;
       }
       // printf("%p\n", (void*) entry_vaddr);
