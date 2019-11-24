@@ -46,7 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     // // printf("%p\n", (void*) entry_vaddr);
     // memcpy((void*) entry_vaddr, buf, entry_filesize);
 
-    ramdisk_write((void*) entry_offset, entry_vaddr-ramdisk_start, entry_filesize);
+    memcpy((void*) entry_vaddr, (void*) (ramdisk_start+entry_offset), entry_filesize);
     memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
   }
   return program_entry;
