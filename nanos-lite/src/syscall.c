@@ -25,10 +25,21 @@ size_t sys_open(_Context* c) {
 }
 
 size_t sys_write(_Context* c) {
+  // int fd = c->GPR2;
+  // void* buf = (void*) c->GPR3;
+  // size_t len = (size_t) c->GPR4;
+  // return fs_write(fd, buf, len);
+
   int fd = c->GPR2;
-  void* buf = (void*) c->GPR3;
+  char* buf = (char*) c->GPR3;
   size_t len = (size_t) c->GPR4;
-  return fs_write(fd, buf, len);
+  if (fd==1||fd==2) {
+    for (int index=0; index<len; index++) {
+      _putc(*(buf+index));
+    }
+    return len;
+  }
+  return -1;
 }
 
 size_t sys_read(_Context* c) {
