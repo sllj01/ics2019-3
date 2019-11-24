@@ -29,7 +29,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Log("size of entrysize is %d\n", phentsize);
 
   Elf_Phdr phdr[phnum];
-  char buf[40000];
+  char buf[20000];
   ramdisk_read(&phdr, phdr_offset, phnum*phentsize);
   for (int index=0; index<phnum; index++) {
     uint32_t pt_load = phdr[index].p_type;
@@ -39,7 +39,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
     // Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
-    assert(entry_filesize<40000);
+    assert(entry_filesize<20000);
 
     ramdisk_read(buf, entry_offset, entry_filesize);
     // printf("%p\n", (void*) entry_vaddr);
