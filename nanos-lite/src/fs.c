@@ -42,17 +42,16 @@ void init_fs() {
 extern size_t ramdisk_read(void*, size_t, size_t);
 extern size_t ramdisk_write(const void*, size_t, size_t);
 
-__ssize_t fs_read(int fd, void* buf, size_t len) {
+size_t fs_read(int fd, void* buf, size_t len) {
   if (fd==0) assert(0);
-  if (file_table[fd].size-file_table[fd].open_offset < len) return 0;
-  else {
-    ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
-    file_table[fd].open_offset += len;
-    return len;
-  }
+  if (file_table[fd].size-file_table[fd].open_offset < len) 
+    len = file_table[fd].size-file_table[fd].open_offset;
+  ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+  file_table[fd].open_offset += len;
+  return len;
 }
 
-__ssize_t fs_write(int fd, void* buf, size_t len) {
+size_t fs_write(int fd, void* buf, size_t len) {
   if (fd==1||fd==2) {
     for (int index=0; index<len; index++) _putc(*((char*)buf+index));
     return len;
