@@ -95,7 +95,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     while (left>0) {
       if (left>=10000){
         fs_read(fd, (void*) buf, 10000);
-        left-=25000;
+        left-=10000;
       }
       else {
         fs_read(fd, (void*) buf, left);
