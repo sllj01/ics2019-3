@@ -5,9 +5,9 @@ make_EHelper(lidt) {
   //TODO();
   uint16_t length = vaddr_read(id_dest->addr, 2);
   uint32_t base = vaddr_read(id_dest->addr+2, 4);
-  IDTR.length = length;
-  if (id_dest->width == 2) IDTR.base = base & 0xFFFFFF;
-  else IDTR.base = base;
+  cpu.idtr.length = length;
+  if (id_dest->width == 2) cpu.idtr.base = base & 0xFFFFFF;
+  else cpu.idtr.base = base;
   print_asm_template1(lidt);
 }
 

@@ -41,7 +41,10 @@ typedef struct {
                 unsigned not_concerned:20;} eflags;
   };
   uint32_t cs;
-
+  struct IDTR {
+    uint16_t length; 
+    uint32_t base;
+  } idtr;
 } CPU_state;
 
 static inline int check_reg_index(int index) {
