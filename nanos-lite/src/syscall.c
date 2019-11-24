@@ -1,10 +1,11 @@
 #include "common.h"
 #include "syscall.h"
+typedef size_t off_t;
 extern uint32_t end;
 extern int fs_open(char*, int, int);
-extern __ssize_t fs_read(int, void*, size_t);
-extern __ssize_t fs_write(int, void*, size_t);
-extern __off_t fs_lseek(int, __off_t, int);
+extern size_t fs_read(int, void*, size_t);
+extern size_t fs_write(int, void*, size_t);
+extern off_t fs_lseek(int, __off_t, int);
 extern int fs_close(int);
 
 size_t sys_exit(_Context* c) {
@@ -98,7 +99,7 @@ _Context* do_syscall(_Context *c) {
       Log("   sys_close");
       c->GPRx = sys_close(c); break;
     case SYS_brk:
-      // Log("    sys_brk\n");
+      Log("    sys_brk\n");
       c->GPRx = sys_brk(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
