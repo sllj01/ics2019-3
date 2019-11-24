@@ -73,14 +73,14 @@ __ssize_t fs_write(int fd, void* buf, size_t len) {
 
 int fs_open(const char* pathname, int flags, int mode) {
   for (int index=3; index<sizeof(file_table)/sizeof(Finfo); index++) {
-    if (file_table[index].name == pathname) {
+    if (strcmp(pathname, file_table[index].name)==0) {
       // file_table[index].read = fs_read;
       // file_table[index].write = fs_write;
       file_table[index].open_offset = 0;
       return index;
     }
   }
-  assert(0); //no pathname file is found
+  panic("no such file!\n"); //no pathname file is found
 }
 
 __off_t fs_lseek(int fd, __off_t offset, int whence) {
