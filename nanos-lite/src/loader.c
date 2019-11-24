@@ -95,14 +95,15 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     while (left>0) {
       if (left>=10000){
         fs_read(fd, (void*) buf, 10000);
+        memcpy((void*) (entry_vaddr+entry_filesize-left), buf, 10000);
         left-=10000;
       }
       else {
         fs_read(fd, (void*) buf, left);
+        memcpy((void*) (entry_vaddr+entry_filesize-left), buf, left);
         left-=left;
       }
       // printf("%p\n", (void*) entry_vaddr);
-      memcpy((void*) entry_vaddr, buf, entry_filesize);
     }
     memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
   }
