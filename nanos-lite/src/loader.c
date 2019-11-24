@@ -32,13 +32,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   char buf[50000];
   ramdisk_read(&phdr, phdr_offset, phnum*phentsize);
   for (int index=0; index<phnum; index++) {
-    // uint32_t pt_load = phdr[index].p_type;
-    // if (pt_load != PT_LOAD) continue;
+    uint32_t pt_load = phdr[index].p_type;
+    if (pt_load != PT_LOAD) continue;
     uint32_t entry_offset = phdr[index].p_offset;
     uint32_t entry_filesize = phdr[index].p_filesz;
     uint32_t entry_memsize = phdr[index].p_memsz;
     uint32_t entry_vaddr = phdr[index].p_vaddr;
-    Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr);
+    Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
     assert(entry_filesize<50000);
 
     ramdisk_read(buf, entry_offset, entry_filesize);
