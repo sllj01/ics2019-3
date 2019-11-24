@@ -68,6 +68,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   Elf_Ehdr header;
   // Log("size of header is %d\n", sizeof(header));
+  Log("which?in main 1?\n");
   ramdisk_read(&header, locat, sizeof(header));
   uint32_t phdr_offset = header.e_phoff;
   uint16_t phnum = header.e_phnum;
@@ -78,6 +79,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   Elf_Phdr phdr[phnum];
   char buf[25000];
+  Log("which?ina main 2?\n");
   ramdisk_read(&phdr, phdr_offset, phnum*phentsize);
   for (int index=0; index<phnum; index++) {
     uint32_t pt_load = phdr[index].p_type;
@@ -92,10 +94,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     int left = entry_filesize;
     while (left>0) {
       if (left>=25000){
+        Log("which?in 1?\n");
         ramdisk_read(buf, entry_offset, 25000);
         left-=25000;
       }
       else {
+        Log("which?in 2?\n");
         ramdisk_read(buf, entry_offset, left);
         left-=left;
       }
