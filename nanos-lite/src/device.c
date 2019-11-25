@@ -18,7 +18,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  int keycode = read_key();
+  int keycode = read_key()&0xFFFF;
   if (keycode!=_KEY_NONE) {
     if ((keycode & 0x8000) != 0) {
       char temp[128];
