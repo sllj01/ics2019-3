@@ -51,7 +51,6 @@ static void i8042_data_io_handler(uint32_t offset, int len, bool is_write) {
   assert(offset == 0);
   if (key_f != key_r) {
     i8042_data_port_base[0] = key_queue[key_f];
-    if (key_queue[key_f]!=0) printf("haha!!!!!!!!!!!!!!!!!!!!!!!!!\n");
     key_f = (key_f + 1) % KEY_QUEUE_LEN;
   }
   else {
