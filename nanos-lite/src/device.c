@@ -21,7 +21,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   int keycode = read_key()&0xFFFF;
   char temp[128];
   if (keycode!=_KEY_NONE) {
-    Log("receive keycode\n");
     if ((keycode & 0x8000) != 0) {
       sprintf(temp, "kd %s\n", keyname[keycode&0xFF]);
       strncpy(buf, temp, len);
