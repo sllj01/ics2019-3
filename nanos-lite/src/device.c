@@ -36,7 +36,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     }
   }
   else {
-    int time = (int) uptime();
+    uint32_t time = uptime();
     char temp[128];
     sprintf(temp, "t %d\n", time);
     strncpy(buf, temp, len);
