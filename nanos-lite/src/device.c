@@ -18,7 +18,32 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  
+  int keycode = read_key();
+  if (keycode!=_KEY_NONE) {
+    if ((keycode & 0x8000) != 0) {
+      char temp[128];
+      sprintf(temp, "kd %s\n", keyname[keycode&0xFF]);
+      strncpy(buf, temp, len);
+      int len_temp = strlen(temp);
+      return len < len_temp? len: len_temp;
+    }
+    else {
+      char temp[128];
+      sprintf(temp, "ku %s\n", keyname[keycode&0xFF]);
+      strncpy(buf, temp, len);
+      int len_temp = strlen(temp);
+      return len < len_temp? len: len_temp;
+    }
+  }
+  else {
+    int time = (int) uptime();
+    char temp[128];
+    sprintf(temp, "t %d", time);
+    strncpy(buf, temp, len);
+    int len_temp = strlen(temp);
+    return len < len_temp? len: len_temp;
+  }
+
   return 0;
 }
 
