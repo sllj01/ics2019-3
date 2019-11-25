@@ -43,7 +43,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     int len_temp = strlen(temp);
     return len < len_temp? len: len_temp;
   }
-
   return 0;
 }
 
