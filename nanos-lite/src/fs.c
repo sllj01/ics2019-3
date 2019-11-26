@@ -7,6 +7,7 @@ extern size_t serial_write(const void*, size_t, size_t);
 extern size_t events_read(void*, size_t, size_t);
 extern size_t dispinfo_read(void*, size_t, size_t);
 extern size_t fbsync_write(const void*, size_t, size_t);
+extern size_t fb_write(const void*, size_t, size_t);
 extern int screen_width();
 extern int screen_height();
 
@@ -37,7 +38,7 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdout", 0, 0, invalid_read, serial_write},
   {"stderr", 0, 0, invalid_read, serial_write},
   {"/dev/events", 0, 0, events_read, invalid_write},
-  {"/dev/fb", 0, 0, invalid_read, }, 
+  {"/dev/fb", 0, 0, invalid_read, fb_write}, 
   {"/dev/fbsync", 0, 0, invalid_read, fbsync_write}, 
   {"/dev/dispinfo", 0, 0, dispinfo_read, invalid_write}, 
 #include "files.h"
