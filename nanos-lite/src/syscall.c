@@ -89,7 +89,7 @@ _Context* do_syscall(_Context *c) {
       // Log("   sys_read");
       c->GPRx = sys_read(c); break;
     case SYS_write: 
-      Log("   sys_write\n"); 
+      // Log("   sys_write\n"); 
       c->GPRx = sys_write(c); break;
     case SYS_lseek:
       // Log("   sys_lseek");
