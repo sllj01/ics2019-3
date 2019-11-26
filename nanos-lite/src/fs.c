@@ -48,7 +48,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
-  file_table[4].size = screen_width()*screen_height();
+  file_table[4].size = screen_width()*screen_height()*4;
   file_table[6].size = 128;
   return;
 }
@@ -60,24 +60,27 @@ extern size_t ramdisk_write(const void*, size_t, size_t);
 size_t fs_read(int fd, void* buf, size_t len) {
   if (fd==0) assert(0);
 
+  if (fd!=3 && file_table[fd].size-file_table[fd].open_offset < len) {
+    len = file_table[fd].size-file_table[fd].open_offset;
+  }
+
   if (file_table[fd].read!=NULL) {
-    file_table[fd].read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+    int ret = file_table[fd].read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+    file_table[fd].open_offset += ret;
+    return ret;
+  }
+  else {
+    ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
     file_table[fd].open_offset += len;
     return len;
   }
-
-  if (file_table[fd].size-file_table[fd].open_offset < len) 
-    len = file_table[fd].size-file_table[fd].open_offset;
-  ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
-  file_table[fd].open_offset += len;
-  return len;
 }
 
 size_t fs_write(int fd, void* buf, size_t len) {
   if (file_table[fd].write!=NULL) {
-    file_table[fd].write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
-    file_table[fd].open_offset += len;
-    return len;
+    int ret = file_table[fd].write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+    file_table[fd].open_offset += ret;
+    return ret;
   }
   else {
     size_t rest = file_table[fd].size-file_table[fd].open_offset;
