@@ -117,8 +117,6 @@ off_t fs_lseek(int fd, __off_t offset, int whence) {
 }
 
 int fs_close(int fd) {
-  file_table[fd].read = invalid_read;
-  file_table[fd].write = invalid_write;
   file_table[fd].open_offset = 0;
   return 0;
 }
