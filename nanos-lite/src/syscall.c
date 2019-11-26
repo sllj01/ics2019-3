@@ -1,12 +1,12 @@
 #include "common.h"
 #include "syscall.h"
 typedef size_t off_t;
-extern uint32_t end;
 extern int fs_open(char*, int, int);
 extern size_t fs_read(int, void*, size_t);
 extern size_t fs_write(int, void*, size_t);
 extern off_t fs_lseek(int, __off_t, int);
 extern int fs_close(int);
+
 
 size_t sys_exit(_Context* c) {
   _halt(c->GPR2);
@@ -64,9 +64,8 @@ size_t sys_close(_Context* c) {
 
 size_t sys_brk(_Context* c) {
 
-  uint32_t new_program_break = c->GPR2;
+  // uint32_t new_program_break = c->GPR2;
     // printf("%d, %d\n", end, new_program_break);
-  end = new_program_break;
   return 0;////////////                  possibly return -1, but not discussed in PA3.  CONFUSED
 }
 
