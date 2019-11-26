@@ -5,6 +5,10 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 typedef size_t off_t;
 extern size_t serial_write(const void*, size_t, size_t);
 extern size_t events_read(void*, size_t, size_t);
+extern size_t dispinfo_read(void*, size_t, size_t);
+extern size_t fbsync_write(const void*, size_t, size_t);
+extern int screen_width();
+extern int screen_height();
 
 typedef struct {
   char *name;
@@ -33,6 +37,9 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdout", 0, 0, invalid_read, serial_write},
   {"stderr", 0, 0, invalid_read, serial_write},
   {"/dev/events", 0, 0, events_read, invalid_write},
+  {"/dev/fb", 0, 0, invalid_read, }, 
+  {"/dev/fbsync", 0, 0, invalid_read, fbsync_write}, 
+  {"/dev/dispinfo", 0, 0, dispinfo_read, invalid_write}, 
 #include "files.h"
 };
 
@@ -40,6 +47,8 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  file_table[4].size = screen_width()*screen_height();
+  return;
 }
 
 

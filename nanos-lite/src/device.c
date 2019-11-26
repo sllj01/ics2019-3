@@ -3,7 +3,6 @@
 #include "klib.h"
 
 
-
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   for (int index=0; index<len; index++) _putc(*((char*)buf+index));
   return len;
@@ -42,14 +41,18 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 static char dispinfo[128] __attribute__((used)) = {};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  assert(offset+len < strlen(dispinfo));
+  strncpy(buf, (void*) (dispinfo+offset), len);
+  return len;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
+  
   return 0;
 }
 
 size_t fbsync_write(const void *buf, size_t offset, size_t len) {
+  draw_sync();
   return 0;
 }
 
@@ -59,4 +62,7 @@ void init_device() {
 
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
+  int width = screen_width();
+  int height = screen_height();
+  sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d", width, height);
 }
