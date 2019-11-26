@@ -102,6 +102,7 @@ int fs_open(const char* pathname, int flags, int mode) {
       return index;
     }
   }
+  printf("%s", pathname);
   panic("no such file!\n"); //no pathname file is found
 }
 
