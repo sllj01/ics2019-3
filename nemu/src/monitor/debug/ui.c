@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+//-----------------------------------externs----------------------------
 void cpu_exec(uint64_t);
 vaddr_t exec_once(void);
 void isa_reg_display();
@@ -15,6 +17,8 @@ extern WP *head;
 extern WP *free_;
 WP* new_wp();
 void free_wp(WP*);
+
+
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -34,6 +38,8 @@ static char* rl_gets() {
   return line_read;
 }
 
+
+//--------------------------------commands-----------------------------
 static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
@@ -125,6 +131,21 @@ static int cmd_d(char *args) {
 	return 0;
 }
 
+//-----------------------difftest_attach and detach-----------------------
+static int cmd_detach(char *args) {
+  extern void difftest_detach();
+  difftest_detach();
+  return 0;
+}
+
+static int cmd_attach(char *args) {
+  extern void difftest_attach();
+  difftest_attach();
+  return 0;
+}
+
+//----------------------------cmd table-------------------------------
+
 
 static struct {
   char *name;
@@ -140,6 +161,8 @@ static struct {
   { "p", "calculate the value of a given expression", cmd_p},
   { "w", "set a watchpoint", cmd_w},
   { "d", "delete a watpoint", cmd_d},
+  { "detach", "detach from qemu", cmd_detach}, 
+  { "attach", "attach to qemu", cmd_attach}, 
   /* TODO: Add more commands */
 
 };
