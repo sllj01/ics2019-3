@@ -146,6 +146,16 @@ static int cmd_attach(char *args) {
   return 0;
 }
 
+//----------------------------sanp------------------------------------
+static int cmd_save(char* args) {
+  char* path = strtok(NULL, " ");
+  Log("saving snap to %s\n", path);
+  return 0;
+}
+
+
+
+
 //----------------------------cmd table-------------------------------
 
 
@@ -165,6 +175,7 @@ static struct {
   { "d", "delete a watpoint", cmd_d},
   { "detach", "detach from qemu", cmd_detach}, 
   { "attach", "attach to qemu", cmd_attach}, 
+  { "save", "save snap to a specified file path", cmd_save},
   /* TODO: Add more commands */
 
 };
