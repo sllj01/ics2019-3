@@ -133,12 +133,14 @@ static int cmd_d(char *args) {
 
 //-----------------------difftest_attach and detach-----------------------
 static int cmd_detach(char *args) {
+  Log("detaching from difftest\n");
   extern void difftest_detach();
   difftest_detach();
   return 0;
 }
 
 static int cmd_attach(char *args) {
+  Log("attaching to difftest");
   extern void difftest_attach();
   difftest_attach();
   return 0;

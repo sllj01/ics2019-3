@@ -49,4 +49,5 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 }
 
 void isa_difftest_attach(void) {
+  // *ref_difftest_memcpy_from_dut(0, )
 }
