@@ -149,7 +149,17 @@ static int cmd_attach(char *args) {
 //----------------------------sanp------------------------------------
 static int cmd_save(char* args) {
   char* path = strtok(NULL, " ");
+  if (!path) {
+    printf("file path cannot be NULL!\n");
+  }
   Log("saving snap to %s\n", path);
+  FILE* p = fopen(path, "w");
+  for(int index=0; index<8; index++) {
+    fprintf(p, "%u", cpu.gpr[index]._32);
+  }
+  fprintf(p, "%u", cpu.pc);
+  fprintf(p, "%u", cpu.FLAGS);
+  fprintf(p, "%u", cpu.cs);
   return 0;
 }
 
