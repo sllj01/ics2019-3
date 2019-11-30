@@ -54,6 +54,6 @@ void isa_difftest_attach(void) {
 
   // ref_difftest_memcpy_from_dut(PC_START - IMAGE_START, mainargs, strlen(mainargs)+1);
   ref_difftest_memcpy_from_dut(0, guest_to_host(0), 0x7c00);
-  // ref_difftest_memcpy_from_dut(0x100000, guest_to_host(0x100000), PMEM_SIZE-0x100000);
+  ref_difftest_memcpy_from_dut(0x100000, guest_to_host(0x100000), PMEM_SIZE-0x100000);
 
 }
