@@ -8,11 +8,6 @@ extern off_t fs_lseek(int, __off_t, int);
 extern int fs_close(int);
 
 
-size_t sys_exit(_Context* c) {
-  _halt(c->GPR2);
-  return c->GPRx;
-}
-
 size_t sys_yield(_Context* c) {
   _yield();
   return 0;
@@ -71,9 +66,14 @@ size_t sys_brk(_Context* c) {
 
 size_t sys_execve(_Context* c) {
   extern void naive_uload(void*, const char*);
+  // argv env not used here
   const char* filename = (char*) c->GPR2;
   naive_uload(NULL, filename);
   return 0;
+}
+
+size_t sys_exit(_Context* c) {
+  return sys_execve(c);
 }
 
 _Context* do_syscall(_Context *c) {
