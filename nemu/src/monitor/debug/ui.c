@@ -184,12 +184,13 @@ static int cmd_load(char* args) {
   ret = fscanf(p, "%u", &cpu.cs);
   // assert(ret!=EOF);
 
-  //---------------------------modify the context in REF
-  cmd_attach(NULL);
+  //---------------------------modify the context in REF: here i simply synchronize the cpu by attaching
+  #ifdef DIFF_TEST
+  extern void (*ref_difftest_setregs)(const void *c);
+  ref_difftest_setregs(&cpu);
+  # endif
   return 0;
 }
-
-
 
 
 //----------------------------cmd table-------------------------------
