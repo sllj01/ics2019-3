@@ -69,7 +69,12 @@ size_t sys_brk(_Context* c) {
   return 0;////////////                  possibly return -1, but not discussed in PA3.  CONFUSED
 }
 
-
+size_t sys_execve(_Context* c) {
+  extern void naive_uload(void*, const char*);
+  const char* filename = (char*) c->GPR2;
+  naive_uload(NULL, filename);
+  return 0;
+}
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -100,6 +105,9 @@ _Context* do_syscall(_Context *c) {
     case SYS_brk:
       // Log("    sys_brk\n");
       c->GPRx = sys_brk(c); break;
+    case SYS_execve:
+      // Log("    sys_execve\n");
+      c->GPRx = sys_execve(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
