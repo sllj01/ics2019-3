@@ -155,7 +155,8 @@ static int cmd_save(char* args) {
   Log("saving snap to %s\n", path);
   FILE* p = fopen(path, "w");
   for(int index=0; index<8; index++) {
-    fprintf(p, "%d", cpu.gpr[index]._32);
+    int ret = fprintf(p, "%d", cpu.gpr[index]._32);
+    printf("%d\n", ret);
   }
   fprintf(p, "%d", cpu.pc);
   fprintf(p, "%d", cpu.FLAGS);
