@@ -155,12 +155,13 @@ static int cmd_save(char* args) {
   Log("saving snap to %s\n", path);
   FILE* p = fopen(path, "w");
   for(int index=0; index<8; index++) {
-    int ret = fprintf(p, "%d", cpu.gpr[index]._32);
-    printf("%d\n", ret);
+  fprintf(p, "%u\n", cpu.gpr[index]._32);
+    // printf("%d\n", ret);
   }
-  fprintf(p, "%d", cpu.pc);
-  fprintf(p, "%d", cpu.FLAGS);
-  fprintf(p, "%d", cpu.cs);
+  fprintf(p, "%u\n", cpu.pc);
+  fprintf(p, "%u\n", cpu.FLAGS);
+  fprintf(p, "%u\n", cpu.cs);
+  fclose(p);
   return 0;
 }
 
@@ -180,7 +181,7 @@ static int cmd_load(char* args) {
   ret = fscanf(p, "%u", &cpu.FLAGS);
   assert(ret!=EOF);
   ret = fscanf(p, "%u", &cpu.cs);
-  assert(ret!=EOF);
+  // assert(ret!=EOF);
   return 0;
 }
 
