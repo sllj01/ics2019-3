@@ -73,7 +73,7 @@ size_t sys_execve(_Context* c) {
 }
 
 size_t sys_exit(_Context* c) {
-  c->GPR2 = (size_t)"bin/init";
+  c->GPR2 = (size_t)"/bin/init";
   c->GPR3 = 0;
   c->GPR4 = 0;
   return sys_execve(c);
