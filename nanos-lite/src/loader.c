@@ -9,7 +9,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-typedef size_t off_t;
+typedef __off_t off_t;
 size_t ramdisk_read(void*, size_t, size_t);
 size_t ramdisk_write(const void*, size_t, size_t);
 void init_ramdisk();
@@ -69,46 +69,45 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr header;
   // Log("size of header is %d\n", sizeof(header));
   fs_read(fd, (void*)&header, sizeof(header));
-  uint32_t phdr_offset = header.e_phoff;
-  uint16_t phnum = header.e_phnum;
+  // uint32_t phdr_offset = header.e_phoff;
+  // uint16_t phnum = header.e_phnum;
   // Log("num of headers is %d\n", phnum);
-  uint16_t phentsize = header.e_phentsize;
-  uint32_t program_entry = header.e_entry;
+  // uint16_t phentsize = header.e_phentsize;
+  // uint32_t program_entry = header.e_entry;
   // Log("-----------------------------size of program is %d\n", program_entry);
 
-  Elf_Phdr phdr[phnum];
+  Elf_Phdr phdr[header.e_phnum];
   char buf[10000];
-  fs_lseek(fd, phdr_offset, 0);
-  fs_read(fd, (void*) &phdr, phnum*phentsize);
+  fs_lseek(fd, header.e_phoff, 0);
+  fs_read(fd, (void*) &phdr, header.e_phnum*header.e_phentsize);
 
-  for (int index=0; index<phnum; index++) {
-    uint32_t pt_load = phdr[index].p_type;
-    if (pt_load != PT_LOAD) continue;
-    uint32_t entry_offset = phdr[index].p_offset;
-    uint32_t entry_filesize = phdr[index].p_filesz;
-    uint32_t entry_memsize = phdr[index].p_memsz;
-    uint32_t entry_vaddr = phdr[index].p_vaddr;
+  for (int index=0; index<header.e_phnum; index++) {
+    if (phdr[index].p_type != PT_LOAD) continue;
+    // uint32_t entry_offset = phdr[index].p_offset;
+    // uint32_t entry_filesize = phdr[index].p_filesz;
+    // uint32_t entry_memsize = phdr[index].p_memsz;
+    // uint32_t entry_vaddr = phdr[index].p_vaddr;
     //Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
-    fs_lseek(fd, entry_offset, 0);
+    fs_lseek(fd, phdr[index].p_offset, 0);
     //血与痛的教训。buf切勿定义过大，否则极有可能缓冲区溢出导致覆盖IDTR。
-    int left = entry_filesize;
+    int left = phdr[index].p_filesz;
     while (left>0) {
       if (left>=10000){
         fs_read(fd, (void*) buf, 10000);
-        memcpy((void*) (entry_vaddr+entry_filesize-left), buf, 10000);
+        memcpy((void*) (phdr[index].p_vaddr+phdr[index].p_filesz-left), buf, 10000);
         left-=10000;
       }
       else {
         fs_read(fd, (void*) buf, left);
-        memcpy((void*) (entry_vaddr+entry_filesize-left), buf, left);
+        memcpy((void*) (phdr[index].p_vaddr+phdr[index].p_filesz-left), buf, left);
         left-=left;
       }
       // printf("%p\n", (void*) entry_vaddr);
     }
-    memset((void*) entry_vaddr+entry_filesize, 0, entry_memsize-entry_filesize);
+    memset((void*) phdr[index].p_vaddr+phdr[index].p_filesz, 0, phdr[index].p_memsz-phdr[index].p_filesz);
   }
   fs_close(fd);
-  return program_entry;
+  return header.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

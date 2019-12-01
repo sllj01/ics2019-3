@@ -1,6 +1,6 @@
 #include "common.h"
 #include "syscall.h"
-typedef size_t off_t;
+typedef __off_t off_t;
 extern int fs_open(char*, int, int);
 extern size_t fs_read(int, void*, size_t);
 extern size_t fs_write(int, void*, size_t);
@@ -73,7 +73,7 @@ size_t sys_execve(_Context* c) {
 }
 
 size_t sys_exit(_Context* c) {
-  c->GPR2 = (uint32_t) "/bin/init";
+  c->GPR2 = (size_t)"bin/init";
   c->GPR3 = 0;
   c->GPR4 = 0;
   return sys_execve(c);
