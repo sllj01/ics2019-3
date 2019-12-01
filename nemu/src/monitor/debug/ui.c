@@ -155,11 +155,31 @@ static int cmd_save(char* args) {
   Log("saving snap to %s\n", path);
   FILE* p = fopen(path, "w");
   for(int index=0; index<8; index++) {
-    fprintf(p, "%u", cpu.gpr[index]._32);
+    fprintf(p, "%u\n", cpu.gpr[index]._32);
   }
-  fprintf(p, "%u", cpu.pc);
-  fprintf(p, "%u", cpu.FLAGS);
-  fprintf(p, "%u", cpu.cs);
+  fprintf(p, "%u\n", cpu.pc);
+  fprintf(p, "%u\n", cpu.FLAGS);
+  fprintf(p, "%u\n", cpu.cs);
+  return 0;
+}
+
+static int cmd_load(char* args) {
+  char* path = strtok(NULL, " ");
+  if (!path) {
+    printf("unable to find such file or directory!\n");
+  }
+  Log("loading snap from %s", path);
+  FILE* p = fopen(path, "r");
+  for (int index=0; index < 8; index++) {
+    int ret = fscanf(p, "%u", &cpu.gpr[index]._32);
+    assert(ret!=EOF);
+  }
+  int ret = fscanf(p, "%u", &cpu.pc);
+  assert(ret!=EOF);
+  ret = fscanf(p, "%u", &cpu.FLAGS);
+  assert(ret!=EOF);
+  ret = fscanf(p, "%u", &cpu.cs);
+  assert(ret!=EOF);
   return 0;
 }
 
@@ -186,6 +206,7 @@ static struct {
   { "detach", "detach from qemu", cmd_detach}, 
   { "attach", "attach to qemu", cmd_attach}, 
   { "save", "save snap to a specified file path", cmd_save},
+  { "load", "load snap from a specified file path", cmd_load}, 
   /* TODO: Add more commands */
 
 };
