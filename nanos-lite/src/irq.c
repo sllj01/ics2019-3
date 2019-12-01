@@ -3,7 +3,7 @@ extern _Context* do_syscall(_Context*);
 static _Context* do_event(_Event e, _Context* c) {
   switch (e.event) {
     case _EVENT_YIELD: 
-      // printf("trigger event yield\n");
+      Log("yield\n");
       break;
     case _EVENT_SYSCALL: 
       // printf("trigger event syscall\n"); 
