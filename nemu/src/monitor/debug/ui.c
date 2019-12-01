@@ -166,7 +166,7 @@ static int cmd_save(char* args) {
 }
 
 static int cmd_load(char* args) {
-  //--------------------------modify the context in DUT
+  //--------------------------restore the context in DUT
   char* path = strtok(NULL, " ");
   if (!path) {
     printf("unable to find such file or directory!\n");
@@ -184,7 +184,7 @@ static int cmd_load(char* args) {
   ret = fscanf(p, "%u", &cpu.cs);
   // assert(ret!=EOF);
 
-  //---------------------------modify the context in REF: here i simply synchronize the cpu by attaching
+  //---------------------------restore the context in REF: here i simply synchronize the cpu by attaching
   #ifdef DIFF_TEST
   extern void (*ref_difftest_setregs)(const void *c);
   ref_difftest_setregs(&cpu);
