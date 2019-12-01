@@ -54,5 +54,10 @@ void isa_difftest_attach(void) {
   //--------------------------------note: the args in ref_difftest_memcpy_from_dut stands for args in qemu!
   ref_difftest_memcpy_from_dut(0, guest_to_host(0), 0x7c00);
   ref_difftest_memcpy_from_dut(0x100000, guest_to_host(0x100000), PMEM_SIZE-0x100000);
+  //--------------------------------set IDT
+  // uint16_t length = cpu.idtr.length;
+  // uint32_t base = cpu.idtr.base;
+  // ref_difftest_memcpy_from_dut(0x7e00, &length, 2);
+  // ref_difftest_memcpy_from_dut(0x7e02, &base, 4);
 
 }
