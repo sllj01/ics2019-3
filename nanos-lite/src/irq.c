@@ -6,7 +6,7 @@ static _Context* do_event(_Event e, _Context* c) {
       Log("trigger event yield\n");
       break;
     case _EVENT_SYSCALL: 
-      Log("trigger event syscall\n"); 
+      // Log("trigger event syscall\n"); 
       do_syscall(c); break;
     default: panic("Unhandled event ID = %d", e.event);
   }
