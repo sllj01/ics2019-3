@@ -12,7 +12,7 @@ extern uint32_t expr(char*, bool*);
 #define MAX_INSTR_TO_PRINT 10
 
 /* restrict the size of log file */
-#define LOG_MAX (1024 * 1024)
+#define LOG_MAX (1024 * 1024*100)
 
 NEMUState nemu_state = {.state = NEMU_STOP};
 
