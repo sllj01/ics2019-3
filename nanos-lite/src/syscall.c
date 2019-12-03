@@ -61,7 +61,7 @@ size_t sys_brk(_Context* c) {
 
   // uint32_t new_program_break = c->GPR2;
     // printf("%d, %d\n", end, new_program_break);
-  return 0;////////////                  possibly return -1, but not discussed in PA3.  CONFUSED
+  return 0;////////////                  possibly return -1, but not discussed in PA3.
 }
 
 size_t sys_execve(_Context* c) {
@@ -86,7 +86,7 @@ _Context* do_syscall(_Context *c) {
   switch (a[0]) {
     case SYS_exit: 
       // Log("    sys_exit\n"); 
-      c->GPRx = sys_exit(c); break;     //////////which parameter should I pass to halt???   CONFUSED
+      c->GPRx = sys_exit(c); break;
     case SYS_yield: 
       // Log("   sys_yield\n"); 
       c->GPRx = sys_yield(c); break;
