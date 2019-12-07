@@ -52,7 +52,7 @@ make_EHelper(cmp) {
 
 
 
-  //   rtl_sext(&s2, &id_src->val, id_src->width);
+    // rtl_sext(&s2, &id_src->val, id_src->width);
   // rtl_sub(&s0, &id_dest->val, &s2);
   // rtl_update_ZFSF(&s0, id_dest->width);
   // // printf("----------------------dest and src values are %x, %x\n", id_dest->val, id_src->val);
