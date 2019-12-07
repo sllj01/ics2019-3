@@ -159,7 +159,7 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   }
 
   t1 = ((uint32_t)(*src1) << (4-width)*8) >> (4-width)*8;
-  printf("%u, %u", *dest, t1);
+  printf("%u, %u\n", *dest, t1);
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
