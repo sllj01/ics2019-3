@@ -40,27 +40,16 @@ make_EHelper(sub) {
 
 make_EHelper(cmp) {
   //TODO();
+  // 注意：这里不需要对src进行符号位扩展。根据手册，当cmp的译码辅助函数包含SI时，本身已进行过扩展；而不为SI时，两个操作数是等长的
+  //      也就是不扩展也能得到正确的结果。然而，如果这里进行了扩展，反而会使得实际运算变成8位减32位,得不到正确结果。
+  //      这实际上是80386手册本身表述的问题。更好的表述是：在需要扩展的opcode条目后注明sign-extended.
   // rtl_sext(&s2, &id_src->val, id_src->width);
   rtl_sub(&s0, &id_dest->val, &id_src->val);
   rtl_update_ZFSF(&s0, id_dest->width);
-  // printf("----------------------dest and src values are %x, %x\n", id_dest->val, id_src->val);
-  // printf("----------------------cmp result is %x\n", s0);
   rtl_is_sub_carry(&s1, &s0, &id_dest->val);
   rtl_set_CF(&s1);
   rtl_is_sub_overflow(&s1, &s0, &id_dest->val, &id_src->val, id_dest->width);
   rtl_set_OF(&s1);
-
-
-
-    // rtl_sext(&s2, &id_src->val, id_src->width);
-  // rtl_sub(&s0, &id_dest->val, &s2);
-  // rtl_update_ZFSF(&s0, id_dest->width);
-  // // printf("----------------------dest and src values are %x, %x\n", id_dest->val, id_src->val);
-  // // printf("----------------------cmp result is %x\n", s0);
-  // rtl_is_sub_carry(&s1, &s0, &id_dest->val);
-  // rtl_set_CF(&s1);
-  // rtl_is_sub_overflow(&s1, &s0, &id_dest->val, &s2, id_dest->width);
-  // rtl_set_OF(&s1);
 
   print_asm_template2(cmp);
 }
