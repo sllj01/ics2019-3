@@ -158,7 +158,7 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   //   else *dest = 0xFFFFFFFF&*src1;
   // }
 
-  *dest = (uint32_t)(*src1) << (4-width)*8 >> (4-width)*8;
+  *dest = ((uint32_t)(*src1) << (4-width)*8) >> (4-width)*8;
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
