@@ -9,14 +9,17 @@ static _Context* do_event(_Event e, _Context* c) {
     case _EVENT_YIELD: 
       // Log("trigger event yield\n");
       next = schedule(c);
-      break;
+      return next;
+      // break;
     case _EVENT_SYSCALL: 
       // Log("trigger event syscall\n"); 
-      do_syscall(c); break;
+      do_syscall(c); 
+      return NULL;
+      // break;
     default: panic("Unhandled event ID = %d", e.event);
   }
 
-  return next;
+  // return next;
 }
 
 void init_irq(void) {
