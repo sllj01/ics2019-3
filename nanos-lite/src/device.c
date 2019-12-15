@@ -4,6 +4,10 @@
 
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
+  
+  // for simulation  of the block
+  _yield();
+  
   for (int index=0; index<len; index++) _putc(*((char*)buf+index));
   return len;
 }
@@ -17,6 +21,10 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
+
+  // for simulation the block
+  _yield();
+
   int keycode = read_key();
   char temp[128];
   if (keycode!=_KEY_NONE) {
@@ -46,6 +54,10 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
+
+  // for simulation  of the block
+  _yield();
+
   int x = offset / 4 % screen_width();
   int y = (offset /4) / screen_width();
   assert(len/4 <= screen_width());
