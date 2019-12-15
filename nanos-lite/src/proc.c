@@ -1,5 +1,6 @@
 #include "proc.h"
 void naive_uload(void*, const char*);
+void context_kload(PCB*, void*);
 
 #define MAX_NR_PROC 4
 
@@ -21,6 +22,7 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
+  context_kload(&pcb[0], (void*)hello_fun);
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -30,5 +32,8 @@ void init_proc() {
 
 }
 _Context* schedule(_Context *prev) {
-  return NULL;
+  // return NULL;
+  current->cp = prev;
+  current = &pcb[0];
+  return current->cp;
 }
