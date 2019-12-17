@@ -45,6 +45,8 @@ typedef struct {
     uint16_t length; 
     uint32_t base;
   } idtr;
+  uint32_t CR3;
+  uint32_t CR0;
 } CPU_state;
 
 static inline int check_reg_index(int index) {
