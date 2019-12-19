@@ -19,7 +19,7 @@ paddr_t page_translate(vaddr_t vaddr) {
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
-  if ((addr>>12)!=((addr+len)>>12)) assert(0);
+  if ((addr>>12)!=((addr+len-0x00001000)>>12)) assert(0);
   else {
     paddr_t paddr = page_translate(addr);
     return paddr_read(paddr, len);
@@ -27,7 +27,7 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
 }
 
 void isa_vaddr_write(vaddr_t addr, uint32_t data, int len) {
-  if ((addr>>12)!=((addr+len)>>12)) {
+  if ((addr>>12)!=((addr+len-0x00001000)>>12)) {
     printf("addr=%x, addr+len=%x\n", addr, addr+len);
     paddr_t phy_address1 = page_translate(addr);
     paddr_t phy_address2 = page_translate(addr+len);
