@@ -74,7 +74,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // Log("num of headers is %d\n", phnum);
   // uint16_t phentsize = header.e_phentsize;
   // uint32_t program_entry = header.e_entry;
-  // Log("-----------------------------size of program is %d\n", program_entry);
+  Log("-----------------------------size of program is %d\n", header.e_entry);
 
   Elf_Phdr phdr[header.e_phnum];
   char buf[10000];
@@ -87,7 +87,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     // uint32_t entry_filesize = phdr[index].p_filesz;
     // uint32_t entry_memsize = phdr[index].p_memsz;
     // uint32_t entry_vaddr = phdr[index].p_vaddr;
-    //Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
+    // Log("entry_offset=%x, entry_filesize=%x, entry_memsize=%x, entry_vaddr=%x, type=%x\n------------------\n", entry_offset, entry_filesize, entry_memsize, entry_vaddr, pt_load);
     fs_lseek(fd, phdr[index].p_offset, 0);
     //血与痛的教训。buf切勿定义过大，否则极有可能缓冲区溢出导致覆盖IDTR。
     int left = phdr[index].p_filesz;
@@ -125,6 +125,7 @@ void context_kload(PCB *pcb, void *entry) {
 }
 
 void context_uload(PCB *pcb, const char *filename) {
+  _protect(&pcb->as);
   uintptr_t entry = loader(pcb, filename);
 
   _Area stack;
