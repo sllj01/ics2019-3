@@ -74,7 +74,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // Log("num of headers is %d\n", phnum);
   // uint16_t phentsize = header.e_phentsize;
   // uint32_t program_entry = header.e_entry;
-  Log("-----------------------------program entry is %x\n", header.e_entry);
+  Log("-----------------------------program entry is %u\n", header.e_entry);
 
   Elf_Phdr phdr[header.e_phnum];
   char buf[10000];
