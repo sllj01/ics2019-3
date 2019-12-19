@@ -19,16 +19,19 @@ paddr_t page_translate(vaddr_t vaddr) {
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
-  if ((addr>>12)!=((addr+len)>>12)&&(((addr+len)&0xFFF)!=0x000)) {
+  if ((addr>>12)!=((addr+len-1)>>12)) {
     printf("addr=%x, addr+len=%x\n", addr, addr+len);
     // assert(0);
-    paddr_t phy_address1 = page_translate(addr);
-    paddr_t phy_address2 = page_translate((addr+len)&~0xFFF);
-    int len1 = (addr&0xFFFFF000)+0x00001000-addr;
-    int len2 = len-len1;
-    uint32_t op1 = paddr_read(phy_address1, len1);
-    uint32_t op2 = paddr_read(phy_address2, len2);
-    return (op2&(len2*8)<<(len1*8))|(op1&(len1*8));
+    uint8_t bytes[len];
+    for (int index=0; index<len; index++) {
+      bytes[index] = isa_vaddr_read(addr+index, 1)&0xFF;
+    }
+    
+    uint32_t ret=0;
+    for (int index=0; index<len; index++) {
+      ret = (ret<<8)|bytes[index];
+    }
+    return ret;
   }
   else {
     paddr_t paddr = page_translate(addr);
@@ -37,15 +40,20 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
 }
 
 void isa_vaddr_write(vaddr_t addr, uint32_t data, int len) {
-  if ((addr>>12)!=((addr+len)>>12)&&(((addr+len)&0xFFF)!=0x000)) {
+  if ((addr>>12)!=((addr+len-1)>>12)) {
     printf("addr=%x, addr+len=%x\n", addr, addr+len);
     // assert(0);
-    paddr_t phy_address1 = page_translate(addr);
-    paddr_t phy_address2 = page_translate((addr+len)&~0xFFF);
-    int len1 = (addr&0xFFFFF000)+0x00001000-addr;
-    int len2 = len-len1;
-    paddr_write(phy_address1, data, len1);
-    paddr_write(phy_address2, data>>(len*8), len2);
+    uint8_t bytes[4];
+
+    for (int index=0; index<4; index++) {
+      bytes[index] = data&0xFF;
+      data = data>>8;
+    }
+
+    for (int index=0; index<len; index++) {
+      isa_vaddr_write(addr+index, bytes[index], 1);
+    }
+
   }
   else {
     paddr_t paddr = page_translate(addr);
