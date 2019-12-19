@@ -15,17 +15,23 @@ paddr_t page_translate(vaddr_t vaddr) {
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
+  #ifdef HAS_VME
   if ((addr>>12)!=((addr+len)>>12)) assert(0);
   else {
     paddr_t paddr = page_translate(addr);
     return paddr_read(paddr, len);
   }
+  #endif
+  return paddr_read(addr, len);
 }
 
 void isa_vaddr_write(vaddr_t addr, uint32_t data, int len) {
+  #ifdef HAS_VME
   if ((addr>>12)!=((addr+len)>>12)) assert(0);
   else {
     paddr_t paddr = page_translate(addr);
     paddr_write(paddr, data, len);
   }
+  #endif
+  paddr_write(addr, data, len);
 }
