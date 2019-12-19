@@ -11,6 +11,7 @@ paddr_t page_translate(vaddr_t vaddr) {
     uint32_t PHY_ADDRESS = paddr_read(PG_TBL+(vaddr<<10>>22), 4);
     printf("PHY_ADDRESS=%x\n", PHY_ADDRESS);
     if ((PHY_ADDRESS&0b1) != 1) assert(0);
+    printf("clip!\n");
     return PHY_ADDRESS + (vaddr&0xFFF);
   } else {
     return vaddr;
