@@ -11,7 +11,7 @@
 void cpu_exec(uint64_t);
 vaddr_t exec_once(void);
 void isa_reg_display();
-uint32_t paddr_read(paddr_t, int);
+uint32_t vaddr_read(vaddr_t, int);
 bool success=true;
 extern WP *head;
 extern WP *free_;
@@ -82,11 +82,11 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
 	char *arg1 = strtok(NULL, " ");
 	char *arg2 = strtok(NULL, " ");
-	paddr_t addr = (paddr_t) strtol(arg2, NULL, 16);	
+	vaddr_t addr = (vaddr_t) strtol(arg2, NULL, 16);	
 	int op_time = atoi(arg1);
 	printf("0x%x: \n", addr);
 	for (int time = 0; time < op_time; time++, addr++)
-	{	uint32_t outcome = paddr_read(addr, 4);
+	{	uint32_t outcome = vaddr_read(addr, 4);
 		printf("%u\n", outcome);
 	}
 	return 0;

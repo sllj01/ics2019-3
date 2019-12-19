@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <regex.h>
 uint32_t isa_reg_str2val(const char*, bool*);
-uint32_t paddr_read(paddr_t, int);
+uint32_t vaddr_read(vaddr_t, int);
 extern bool success;
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM10, TK_LCOM, TK_RCOM, TK_HEXADECIMAL, TK_REGNAME, TK_NOTEQUAL, TK_AND, TK_DEREF
@@ -161,8 +161,8 @@ uint32_t eval(int start, int end){
 	{	int op = find_primary_operator(start, end);
 		if (tokens[op].type==TK_DEREF)
 		{
-			paddr_t addr = eval(op+1, end);
-			return paddr_read(addr, 4);
+			vaddr_t addr = eval(op+1, end);
+			return vaddr_read(addr, 4);
 		}
 		else
 		{
