@@ -16,6 +16,7 @@ paddr_t page_translate(vaddr_t vaddr) {
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
   #ifdef HAS_VME
+  printf("--------------------------");
   if ((addr>>12)!=((addr+len)>>12)) assert(0);
   else {
     paddr_t paddr = page_translate(addr);
