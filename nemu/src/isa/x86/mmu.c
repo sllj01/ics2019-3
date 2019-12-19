@@ -29,7 +29,7 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
     
     uint32_t ret=0;
     for (int index=0; index<len; index++) {
-      ret = (ret<<8)|bytes[index];
+      ret = (ret<<8)|bytes[len-1-index];
     }
     return ret;
   }
