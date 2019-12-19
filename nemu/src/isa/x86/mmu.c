@@ -1,7 +1,7 @@
 #include "nemu.h"
 
 paddr_t page_translate(vaddr_t vaddr) {
-  if ((cpu.CR0&~0x1) == 1) {
+  if ((cpu.CR0>>31) == 1) {
     uint32_t CR3 = cpu.CR3;
     // printf("CR3=%x\n", CR3);
     // printf("vaddr = %x\n", vaddr);
