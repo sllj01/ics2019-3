@@ -15,9 +15,11 @@ make_EHelper(mov_r2cr) {
   //TODO();
   if (id_dest->reg==0) {
     cpu.CR0 = id_src->val;
+    printf("into CR0, value=%x\n", id_src->val);
   }
   else if (id_dest->reg==3) {
     cpu.CR3 = id_src->val;
+    printf("into CR3, value=%x\n", id_src->val);
   }
   else panic("reg not exist!\n");
 
