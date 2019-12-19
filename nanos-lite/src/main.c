@@ -9,6 +9,7 @@ void init_proc(void);
 
 int main() {
 #ifdef HAS_VME
+  Log("VME SYSTEM ACCEPTED!\n");
   init_mm();
 #endif
 
