@@ -16,21 +16,21 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite for the %dth time!", j);
+    // Log("Hello World from Nanos-lite for the %dth time!", j);
     j ++;
     _yield();
   }
 }
 
 void init_proc() {
-  // context_kload(&pcb[0], (void*)hello_fun);
-  // context_uload(&pcb[1], "/bin/init");
+  context_kload(&pcb[0], (void*)hello_fun);
+  context_uload(&pcb[1], "/bin/init");
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-  naive_uload(&pcb[1], "/bin/init");
+  // naive_uload(&pcb[1], "/bin/init");
 
 }
 _Context* schedule(_Context *prev) {
