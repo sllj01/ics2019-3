@@ -8,10 +8,10 @@ paddr_t page_translate(vaddr_t vaddr) {
     uint32_t PG_TBL = paddr_read(CR3+(vaddr>>22), 4);
     printf("PG_TBL=%x\n", PG_TBL);
     if ((PG_TBL&0b1) != 1) assert(0);
-    uint32_t PHY_ADDRESS = paddr_read(PG_TBL+(vaddr<<10>>22), 4);
+    uint32_t PHY_ADDRESS = paddr_read((PG_TBL&~0xFFF)|(vaddr<<10>>22), 4);
     printf("PHY_ADDRESS=%x\n", PHY_ADDRESS);
-    // if ((PHY_ADDRESS&0b1) != 1) assert(0);
-    return PHY_ADDRESS + (vaddr&0xFFF);
+    if ((PHY_ADDRESS&0b1) != 1) assert(0);
+    return (PHY_ADDRESS&~0xFFF) | (vaddr&0xFFF);
   } else {
     return vaddr;
   }
