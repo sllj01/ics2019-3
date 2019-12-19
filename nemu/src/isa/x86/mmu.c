@@ -19,7 +19,7 @@ paddr_t page_translate(vaddr_t vaddr) {
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
-  if ((addr>>12)!=((addr+len)>>12)&&((addr&0xFFF)!=0xffc)) {
+  if ((addr>>12)!=((addr+len)>>12)&&(((addr+len)&0xFFF)!=0x000)) {
     printf("addr=%x, addr+len=%x\n", addr, addr+len);
     assert(0);
   }
