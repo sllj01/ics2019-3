@@ -23,6 +23,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     printf("-------------pre_max_brk=%d, inc=%d, current_brk=%d\n", current->max_brk, increment, brk);
     int left = new_brk-current->max_brk;
     int res = 4096-(current->max_brk%4096);
+    printf("res=%d\n", res);
     left = left-res;
 
     void* va = (void*) ((current->max_brk/4096+1)<<12);
