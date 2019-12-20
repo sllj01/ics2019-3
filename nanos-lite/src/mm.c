@@ -19,7 +19,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
   extern PCB* current;
   uintptr_t new_brk = brk+increment;
   if (new_brk>current->max_brk) {
-    printf("-------------brk=%d\n", current->max_brk);
+    printf("-------------pre_max_brk=%d\n, inc=%d", current->max_brk, increment);
     int left = new_brk-current->max_brk;
     int res = 4096-(current->max_brk%4096);
     left = left-res;
