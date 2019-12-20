@@ -24,10 +24,11 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     int left = new_brk-current->max_brk;
     int res = 4096-(current->max_brk%4096);
     left = left-res;
-    printf("do!\n");
+
     void* va = (void*) ((current->max_brk/4096+1)<<12);
     while(left > 0) {
       void* pa = new_page(1);
+      printf("in mm_brk, va=%d, pa=%d\n", va, pa);
       _map(&current->as, va, pa, 1);
       va += (1<<12);
       left -= 4096;
