@@ -57,11 +57,12 @@ size_t sys_close(_Context* c) {
   return fs_close(fd);
 }
 
+int mm_brk(uintptr_t, intptr_t);
 size_t sys_brk(_Context* c) {
+  intptr_t old_programm_break = c->GPR2;
+  int increment = c->GPR3;
+  return mm_brk(old_programm_break, increment);
 
-  // uint32_t new_program_break = c->GPR2;
-    // printf("%d, %d\n", end, new_program_break);
-  return 0;////////////                  possibly return -1, but not discussed in PA3.
 }
 
 size_t sys_execve(_Context* c) {
