@@ -151,15 +151,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       }
 
     }
-    
-
-
-
-
-
-
-
-    memset((void*) phdr[index].p_vaddr+phdr[index].p_filesz, 0, phdr[index].p_memsz-phdr[index].p_filesz);
   }
   fs_close(fd);
   return header.e_entry;
