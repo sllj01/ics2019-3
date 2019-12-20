@@ -106,6 +106,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_read(fd, (void*) buf, 4096);
         va = phdr[index].p_vaddr+phdr[index].p_filesz-left;
         pa = (paddr_t) new_page(1);
+        Log("set map va=%p, pa=%p\n", va, pa);
         _map(&pcb->as, (void*)va, (void*)pa, 1);
         memcpy((void*)pa, buf, 4096);
         left-=4096;
