@@ -16,11 +16,11 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
-  // extern PCB* current;
+  extern PCB* current;
   uintptr_t new_brk = brk+increment;
   if (new_brk>current->max_brk) {
     int left = new_brk-current->max_brk;
-    int res = 4096-(current->max_brk%4096);
+    int res = 4096-(current->max_brk%4096)-1;
     left = left-res;
 
     void* va = (void*) ((current->max_brk/4096+1)<<12);
