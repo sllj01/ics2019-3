@@ -30,6 +30,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
       va += (1<<12);
       left -= 4096;
     }
+    current->max_brk = new_brk;
   }
   return 0;
 }
