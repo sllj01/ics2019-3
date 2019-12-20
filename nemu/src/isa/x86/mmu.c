@@ -6,7 +6,7 @@ paddr_t page_translate(vaddr_t vaddr) {
     // printf("CR3=%x\n", CR3);
     // printf("vaddr = %x\n", vaddr);
     uint32_t PG_TBL = paddr_read((CR3&~0xFFF)|(vaddr>>22<<2), 4);
-    printf("PG_TBL=%x\n", PG_TBL);
+    // printf("PG_TBL=%x\n", PG_TBL);
     if ((PG_TBL&0b1) != 1) {
       printf("CR3=%x\n", CR3);
       printf("vaddr = %x\n", vaddr);
