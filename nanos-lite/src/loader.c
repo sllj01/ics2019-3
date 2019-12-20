@@ -9,6 +9,9 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+#define vaddr_t uint32_t
+#define paddr_t uint32_t
+
 typedef __off_t off_t;
 size_t ramdisk_read(void*, size_t, size_t);
 size_t ramdisk_write(const void*, size_t, size_t);
@@ -19,7 +22,11 @@ int fs_open(const char*, int, int);
 off_t fs_lseek(int, __off_t, int);
 int fs_close(int);
 size_t fs_read(int, void*, size_t);
-
+// paddr_t page_translate(PCB *pcb, vaddr_t vaddr) {
+//   uint32_t PD_BASE = pcb->as.ptr;
+//   uint32_t PB_BASE = *(uint32_t*)(PD_BASE&~0xFFF | (vaddr>>22<<2));
+//   uint32_t PHY_ADDRESS = *(uint32_t*)PB_BASE&~0xFFF | (vaddr<<10>>22<<2);
+// }
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
@@ -63,7 +70,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // }
   // return program_entry;
 
-  // Log("-------------------------------------------------------------------");
+  // Log("-------------------------------------------------------------------------------");
   int fd = fs_open(filename, 0, 0);
 
   Elf_Ehdr header;
@@ -77,7 +84,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Log("-----------------------------program entry is %d\n", header.e_entry);
 
   Elf_Phdr phdr[header.e_phnum];
-  char buf[10000];
+  char buf[4096];
   fs_lseek(fd, header.e_phoff, 0);
   fs_read(fd, (void*) &phdr, header.e_phnum*header.e_phentsize);
 
@@ -91,19 +98,67 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     fs_lseek(fd, phdr[index].p_offset, 0);
     //血与痛的教训。buf切勿定义过大，否则极有可能缓冲区溢出导致覆盖IDTR。
     int left = phdr[index].p_filesz;
+    int last_read = 0;
+    vaddr_t va=0;
+    paddr_t pa=0;
     while (left>0) {
-      if (left>=10000){
-        fs_read(fd, (void*) buf, 10000);
-        memcpy((void*) (phdr[index].p_vaddr+phdr[index].p_filesz-left), buf, 10000);
-        left-=10000;
+      if (left>=4096){
+        fs_read(fd, (void*) buf, 4096);
+        va = phdr[index].p_vaddr+phdr[index].p_filesz-left;
+        pa = (paddr_t) new_page(1);
+        _map(&pcb->as, (void*)va, (void*)pa, 1);
+        memcpy((void*)pa, buf, 4096);
+        left-=4096;
+        last_read = 4096;
       }
       else {
         fs_read(fd, (void*) buf, left);
-        memcpy((void*) (phdr[index].p_vaddr+phdr[index].p_filesz-left), buf, left);
+        va = phdr[index].p_vaddr+phdr[index].p_filesz-left;
+        pa = (paddr_t) new_page(1);
+        _map(&pcb->as, (void*)va, (void*)pa, 1);
+        memcpy((void*)pa, buf, left);
+        last_read = left;
         left-=left;
       }
       // printf("%p\n", (void*) entry_vaddr);
     }
+
+    left = phdr[index].p_memsz-phdr[index].p_filesz;
+    if (last_read!=4096) {
+      va = phdr[index].p_vaddr+phdr[index].p_filesz;
+      int res = 4096-last_read;
+      if (res>=left) {
+        memset((void*)(pa+last_read), 0, left);
+        continue;
+      }
+      else {
+        memset((void*)(pa+last_read), 0, res);
+        left-=res;
+      }
+      while (left>0) {
+        va = phdr[index].p_vaddr + phdr[index].p_memsz-left;
+        pa = (paddr_t) new_page(1);
+        _map(&pcb->as, (void*)va, (void*)pa, 1);
+        if (left>=4096) {
+          memset((void*)pa, 0, 4096);
+          left-=4096;
+        }
+        else {
+          memset((void*)pa, 0, left);
+          left-=left;
+        }
+
+      }
+
+    }
+    
+
+
+
+
+
+
+
     memset((void*) phdr[index].p_vaddr+phdr[index].p_filesz, 0, phdr[index].p_memsz-phdr[index].p_filesz);
   }
   fs_close(fd);
