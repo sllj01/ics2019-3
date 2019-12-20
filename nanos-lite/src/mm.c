@@ -20,10 +20,10 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
   uintptr_t new_brk = brk+increment;
   if (new_brk>current->max_brk) {
     int left = new_brk-current->max_brk;
-    int res = 4096-(current->max_brk%4096)-1;
+    int res = 4096-(current->max_brk%4096);
     left = left-res;
 
-    void* va = (void*) ((current->max_brk/4096+1)<<12);
+    void* va = (void*) ((current->max_brk/4096)<<12);
     while(left > 0) {
       void* pa = new_page(1);
       _map(&current->as, va, pa, 1);
