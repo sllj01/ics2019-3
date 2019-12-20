@@ -18,7 +18,7 @@ paddr_t page_translate(vaddr_t vaddr) {
     if ((PHY_ADDRESS&0b1) != 1) {
           printf("CR3=%x\n", CR3);
       printf("vaddr = %x\n", vaddr);
-      printf("PG_TBL=%x\n", PG_TBL);
+      printf("PHYADDRESS=%x\n", PHY_ADDRESS);
       assert(0);
     }
     return (PHY_ADDRESS&~0xFFF) | (vaddr&0xFFF);
