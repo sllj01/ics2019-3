@@ -177,7 +177,7 @@ void context_uload(PCB *pcb, const char *filename) {
   _protect(&pcb->as);
   uintptr_t entry = loader(pcb, filename);
   printf("loader returns %d\n", entry);
-  printf("user ptr=%f", pcb->as.ptr);
+  printf("user ptr=%d", pcb->as.ptr);
 
   _Area stack;
   stack.start = pcb->stack;
