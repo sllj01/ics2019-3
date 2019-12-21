@@ -76,7 +76,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // Log("num of headers is %d\n", phnum);
   // uint16_t phentsize = header.e_phentsize;
   // uint32_t program_entry = header.e_entry;
-  Log("-----------------------------program entry is %d\n", header.e_entry);
+  // Log("-----------------------------program entry is %d\n", header.e_entry);
 
   Elf_Phdr phdr[header.e_phnum];
   char buf[4096];
@@ -101,7 +101,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_read(fd, (void*) buf, 4096);
         va = phdr[index].p_vaddr+phdr[index].p_filesz-left;
         pa = (paddr_t) new_page(1);
-        Log("set map va=%d, pa=%d\n", va, pa);
+        // Log("set map va=%d, pa=%d\n", va, pa);
         _map(&pcb->as, (void*)va, (void*)pa, 1);
         memcpy((void*)pa, buf, 4096);
         left-=4096;
@@ -111,7 +111,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_read(fd, (void*) buf, left);
         va = phdr[index].p_vaddr+phdr[index].p_filesz-left;
         pa = (paddr_t) new_page(1);
-        Log("set map va=%d, pa=%d\n", va, pa);
+        // Log("set map va=%d, pa=%d\n", va, pa);
         _map(&pcb->as, (void*)va, (void*)pa, 1);
         memcpy((void*)pa, buf, left);
         last_read = left;
@@ -169,8 +169,6 @@ void context_kload(PCB *pcb, void *entry) {
 void context_uload(PCB *pcb, const char *filename) {
   _protect(&pcb->as);
   uintptr_t entry = loader(pcb, filename);
-  printf("loader returns %d\n", entry);
-  printf("user ptr=%d", pcb->as.ptr);
 
   _Area stack;
   stack.start = pcb->stack;
