@@ -27,7 +27,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     current->max_brk = brk;
   }
   if (new_brk>current->max_brk) {
-    printf("-------------pre_max_brk=%d, inc=%d, current_brk=%d\n", current->max_brk, increment, brk);
+    // printf("-------------pre_max_brk=%d, inc=%d, current_brk=%d\n", current->max_brk, increment, brk);
     int left = new_brk-current->max_brk;
     int res = (4096-(current->max_brk%4096))%4096;
     left = left-res;
@@ -36,14 +36,14 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     void* va = (void*) (((current->max_brk-1)/4096+1)<<12);
     while(left > 0) {
       void* pa = new_page(1);
-      printf("in mm_brk, va=%d, pa=%d\n", va, pa);
+      // printf("in mm_brk, va=%d, pa=%d\n", va, pa);
       _map(&current->as, va, pa, 1);
       va += (1<<12);
       left -= 4096;
     }
     current->max_brk = new_brk;
   }
-  printf("return mm_brk\n");
+  // printf("return mm_brk\n");
   return 0;
 }
 
