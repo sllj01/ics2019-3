@@ -20,6 +20,9 @@ static const char *keyname[256] __attribute__((used)) = {
   _KEYS(NAME)
 };
 
+
+int fg_pcb;
+
 size_t events_read(void *buf, size_t offset, size_t len) {
 
   // for simulation the block
@@ -31,6 +34,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     if ((keycode & 0x8000) != 0) {
       sprintf(temp, "kd %s\n", keyname[keycode&0xFF]);
       strncpy(buf, temp, len);
+      if (strcmp("kd F1\n", temp)==0) fg_pcb = 1;
+      else if (strcmp("kd F2\n", temp)==0) fg_pcb = 2;
+      else if (strcmp("kd F3\n", temp)==0) fg_pcb = 3;
     }
     else {
       sprintf(temp, "ku %s\n", keyname[keycode&0xFF]);
