@@ -24,5 +24,6 @@ vaddr_t exec_once(void) {
   if (isa_query_intr()) {
     update_pc();
   }
+  printf("cpu.pc=%x", cpu.pc);
   return decinfo.seq_pc;
 }
