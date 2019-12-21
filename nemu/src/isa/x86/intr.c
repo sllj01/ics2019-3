@@ -25,7 +25,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   rtl_j(jmp_des);
 }
 
-#define IRQ_TIMER 32
+#define IRQ_TIMER 0x32
 
 bool isa_query_intr(void) {
   if ((cpu.eflags.IF==1)&&cpu.INTR) {
