@@ -21,7 +21,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 
-int fg_pcb;
+int fg_pcb = 1;
 
 size_t events_read(void *buf, size_t offset, size_t len) {
 
