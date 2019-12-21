@@ -19,11 +19,16 @@ void free_page(void *p) {
 int mm_brk(uintptr_t brk, intptr_t increment) {
   extern PCB* current;
   uintptr_t new_brk = brk+increment;
-  if (current->max_brk==0) current->max_brk = brk;
+  if (current->max_brk==0) {
+    void* va =(void*) (brk>>12<<12);
+    void* pa = new_page(1);
+    _map(&current->as, va, pa, 1);
+    current->max_brk = brk;
+  }
   if (new_brk>current->max_brk) {
     printf("-------------pre_max_brk=%d, inc=%d, current_brk=%d\n", current->max_brk, increment, brk);
     int left = new_brk-current->max_brk;
-    int res = 4096-(current->max_brk%4096);
+    int res = (4096-(current->max_brk%4096))%4096;
     printf("res=%d\n", res);
     left = left-res;
 
@@ -35,7 +40,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
       va += (1<<12);
       left -= 4096;
     }
-    current->max_brk += increment;
+    current->max_brk = new_brk;
   }
   return 0;
 }
