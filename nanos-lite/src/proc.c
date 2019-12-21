@@ -44,7 +44,17 @@ _Context* schedule(_Context *prev) {
   // current->cp = prev;
   // current = &pcb[0];
   // return current->cp;
-  current->cp = prev;
-  current = (current==&pcb[0]? &pcb[fg_pcb]:&pcb[0]);
+  static int counter=0;
+  if (counter==0) {
+    current->cp = prev;
+    current = &pcb[0];
+  }
+  else {
+    current->cp = prev;
+    current = &pcb[fg_pcb];
+  }
+  counter = (counter+1)%1000;
+  // current->cp = prev;
+  // current = (current==&pcb[0]? &pcb[fg_pcb]:&pcb[0]);
   return current->cp;
 }
