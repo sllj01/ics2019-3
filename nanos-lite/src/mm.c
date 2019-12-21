@@ -21,9 +21,9 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
   extern PCB* current;
   uintptr_t new_brk = brk+increment;
   if (current->max_brk==0) {
-    void* va =(void*) (brk>>12<<12);
-    void* pa = new_page(1);
-    _map(&current->as, va, pa, 1);
+    // void* va =(void*) (brk>>12<<12);
+    // void* pa = new_page(1);
+    // _map(&current->as, va, pa, 1);
     current->max_brk = brk;
   }
   if (new_brk>current->max_brk) {
