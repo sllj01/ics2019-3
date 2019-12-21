@@ -29,11 +29,11 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
   if (new_brk>current->max_brk) {
     printf("-------------pre_max_brk=%d, inc=%d, current_brk=%d\n", current->max_brk, increment, brk);
     int left = new_brk-current->max_brk;
-    int res = (4096-(current->max_brk%4096))%4096;
+    int res = (4096-(current->max_brk%4096)-1)%4096;
     left = left-res;
         printf("left=%d\n", left);
 
-    void* va = (void*) (((current->max_brk-1)/4096+1)<<12);
+    void* va = (void*) ((current->max_brk/4096+1)<<12);
     while(left > 0) {
       void* pa = new_page(1);
       printf("in mm_brk, va=%d, pa=%d\n", va, pa);
