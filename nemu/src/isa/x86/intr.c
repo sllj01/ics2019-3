@@ -6,6 +6,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
    * That is, use ``NO'' to index the IDT.
    */
   rtl_push(&cpu.FLAGS);
+  cpu.eflags.IF=0;
   rtl_push(&cpu.cs);
   rtl_push(&ret_addr);
   // rtl_push(&NO);
@@ -24,6 +25,13 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   rtl_j(jmp_des);
 }
 
+#define IRQ_TIMER 32
+
 bool isa_query_intr(void) {
+  if (cpu.INTR) {
+    cpu.INTR = false;
+    raise_intr(IRQ_TIMER, cpu.pc);
+    return true;
+  }
   return false;
 }

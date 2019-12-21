@@ -22,11 +22,6 @@ int fs_open(const char*, int, int);
 off_t fs_lseek(int, __off_t, int);
 int fs_close(int);
 size_t fs_read(int, void*, size_t);
-// paddr_t page_translate(PCB *pcb, vaddr_t vaddr) {
-//   uint32_t PD_BASE = pcb->as.ptr;
-//   uint32_t PB_BASE = *(uint32_t*)(PD_BASE&~0xFFF | (vaddr>>22<<2));
-//   uint32_t PHY_ADDRESS = *(uint32_t*)PB_BASE&~0xFFF | (vaddr<<10>>22<<2);
-// }
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
@@ -150,9 +145,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           memset((void*)pa, 0, left);
           left-=left;
         }
-
       }
-
     }
   }
   fs_close(fd);

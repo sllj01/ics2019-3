@@ -36,7 +36,9 @@ typedef struct {
                 unsigned not_concerned3:1;
                 unsigned ZF:1;
                 unsigned SF:1;
-                unsigned not_concerned4:3;
+                unsigned not_concerned4:1;
+                unsigned IF:1;
+                unsigned not_concerned5:1;
                 unsigned OF:1;
                 unsigned not_concerned:20;} eflags;
   };
@@ -47,6 +49,7 @@ typedef struct {
   } idtr;
   uint32_t CR3;
   uint32_t CR0;
+  bool INTR;
 } CPU_state;
 
 static inline int check_reg_index(int index) {

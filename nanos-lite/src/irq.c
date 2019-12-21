@@ -14,6 +14,10 @@ static _Context* do_event(_Event e, _Context* c) {
       // Log("trigger event syscall\n"); 
       do_syscall(c); 
       break;
+    case _EVENT_IRQ_TIMER:
+      Log("trigger event timer trq\n");
+      _yield();
+      break;
     default: panic("Unhandled event ID = %d", e.event);
   }
 
