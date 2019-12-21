@@ -22,7 +22,7 @@ vaddr_t exec_once(void) {
   isa_exec(&decinfo.seq_pc);
   update_pc();
   if (isa_query_intr()) {
-    printf("timer!!!\n");
+    // printf("timer!!!\n");
     update_pc();
   }
 
