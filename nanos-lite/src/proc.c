@@ -26,6 +26,8 @@ void init_proc() {
   // context_kload(&pcb[0], (void*)hello_fun);
   context_uload(&pcb[0], "/bin/hello");
   context_uload(&pcb[1], "/bin/init");
+  context_uload(&pcb[2], "bin/init");
+  context_uload(&pcb[3], "bin/init");
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -34,6 +36,8 @@ void init_proc() {
   // naive_kload(&pcb[1], "/bin/init");
 
 }
+
+extern int fg_pcb;
 _Context* schedule(_Context *prev) {
   // return NULL;
 
@@ -41,6 +45,6 @@ _Context* schedule(_Context *prev) {
   // current = &pcb[0];
   // return current->cp;
   current->cp = prev;
-  current = (current==&pcb[0]? &pcb[1]:&pcb[0]);
+  current = (current==&pcb[0]? &pcb[fg_pcb]:&pcb[0]);
   return current->cp;
 }
