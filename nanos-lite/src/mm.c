@@ -17,6 +17,7 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 // 数据对齐！！！！！！
 int mm_brk(uintptr_t brk, intptr_t increment) {
+  printf("entering mm_brk!\n");
   extern PCB* current;
   uintptr_t new_brk = brk+increment;
   if (current->max_brk==0) {
@@ -42,6 +43,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     }
     current->max_brk = new_brk;
   }
+  printf("return mm_brk\n");
   return 0;
 }
 
